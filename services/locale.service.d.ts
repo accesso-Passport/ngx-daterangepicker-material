@@ -2,7 +2,7 @@ import { LocaleConfig } from '../date-range-picker.config';
 export declare class LocaleService {
     private _config;
     constructor(_config: LocaleConfig);
-    get config(): {
+    readonly config: {
         direction?: string;
         separator?: string;
         weekLabel?: string;

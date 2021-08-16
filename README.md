@@ -1,13 +1,6 @@
 # ngx-daterangepicker-material
 > Pure Angular 2+ Date range picker.
 
-## Building
-1. copy the contents of `package.build.json` to `package.json`
-2. run `npm run build`
-3. browse to the `dist` folder
-4. copy the contents of the `dist` folder to the root of the project folder, overwriting what's there
-5. commit/merge changes to master
-
 [![Build Status](https://travis-ci.org/fetrarij/ngx-daterangepicker-material.svg?branch=master)](https://travis-ci.org/fetrarij/ngx-daterangepicker-material)
 [![npm version](https://badge.fury.io/js/ngx-daterangepicker-material.svg)](https://badge.fury.io/js/ngx-daterangepicker-material)
 [![last commit](https://img.shields.io/github/last-commit/fetrarij/ngx-daterangepicker-material.svg)](https://github.com/fetrarij/ngx-daterangepicker-material/commits/master)
