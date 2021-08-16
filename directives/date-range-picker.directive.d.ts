@@ -15,10 +15,12 @@ export declare class DateRangePickerDirective implements OnInit, OnChanges, DoCh
     private differs;
     private _localeService;
     private elementRef;
-    locale: any;
-    startKey: any;
-    endKey: any;
-    value: any;
+    set locale(value: any);
+    get locale(): any;
+    set startKey(value: any);
+    set endKey(value: any);
+    get value(): any;
+    set value(val: any);
     constructor(applicationRef: ApplicationRef, viewContainerRef: ViewContainerRef, injector: Injector, _changeDetectorRef: ChangeDetectorRef, _componentFactoryResolver: ComponentFactoryResolver, _el: ElementRef, _renderer: Renderer2, differs: KeyValueDiffers, _localeService: LocaleService, elementRef: ElementRef);
     picker: DateRangePickerComponent;
     private _onChange;
