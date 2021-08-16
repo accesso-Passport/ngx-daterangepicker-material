@@ -16,6 +16,28 @@ This plugin have an independant theme which looks more close to material design,
 
 demo:  https://fetrarij.github.io/ngx-daterangepicker-material/
 
+## Accesso Deployment Process
+
+ng-shared-library is being published to the TE2 Artifactory NPM Registry. 
+In order to use the repo in other applications via npm install you will need to 
+setup your environment to use the TE2 registry. Access the [TE2 Artifactory](https://ci.te2.biz/artifactory/webapp/#/artifacts/browse/tree/General/te2-npm) 
+Access your profile and generate an API key. Once you have an API key, click
+`Set Me Up` in the [TE2 Artifactory NPM Portal](https://ci.te2.biz/artifactory/webapp/#/artifacts/browse/tree/General/te2-npm) 
+
+Be sure to also configure npm to use the registry with: 
+`npm config set registry https://ci.te2.biz/artifactory/api/npm/te2-npm`
+Your local `~/.npmrc` file should like similar to:
+
+```
+_auth="<your-artifactory-auth>"
+always-auth=true
+email=<your-artifactory-email>
+registry=https://ci.te2.biz/artifactory/api/npm/te2-npm
+```
+
+Once your environment is setup, build the distributable with: `npm run build`, then
+`cd` into the created `dist` folder and run `npm publish`
+
 ## Installation
 
  Install the plugin from npm:
