@@ -1,6 +1,30 @@
 # ngx-daterangepicker-material
 > Pure Angular 2+ Date range picker.
 
+## Accesso Deployment Process
+
+*You will need publish rights to the [TE2 Artifactory](https://ci.te2.biz/artifactory/webapp/#/artifacts/browse/tree/General/te2-npm) instance.*
+
+ng-shared-library is being published to the TE2 Artifactory NPM Registry.
+In order to use the repo in other applications via `npm install` you will need to
+set up your environment to use the TE2 registry. Access the TE2 Artifactory instance then 
+access your profile and generate an API key. Once you have an API key, click the `te2 - npm`
+option under the *Set Me Up* section.
+
+Be sure to also configure npm to use the registry with:
+`npm config set registry https://ci.te2.biz/artifactory/api/npm/te2-npm`
+Your local (meaning for your project) `<project root>/.npmrc` file should like similar to:
+
+```
+_auth="<your-artifactory-auth>"
+always-auth=true
+email=<your-artifactory-email>
+registry=https://ci.te2.biz/artifactory/api/npm/te2-npm
+```
+
+Once your environment is setup, build the distributable with: `npm run build`, then
+`cd` into the created `dist` folder and run `npm publish`
+
 [![Build Status](https://travis-ci.org/fetrarij/ngx-daterangepicker-material.svg?branch=master)](https://travis-ci.org/fetrarij/ngx-daterangepicker-material)
 [![npm version](https://badge.fury.io/js/ngx-daterangepicker-material.svg)](https://badge.fury.io/js/ngx-daterangepicker-material)
 [![last commit](https://img.shields.io/github/last-commit/fetrarij/ngx-daterangepicker-material.svg)](https://github.com/fetrarij/ngx-daterangepicker-material/commits/master)
@@ -15,28 +39,6 @@ This plugin have an independant theme which looks more close to material design,
 ![](screen.png)
 
 demo:  https://fetrarij.github.io/ngx-daterangepicker-material/
-
-## Accesso Deployment Process
-
-ng-shared-library is being published to the TE2 Artifactory NPM Registry. 
-In order to use the repo in other applications via npm install you will need to 
-setup your environment to use the TE2 registry. Access the [TE2 Artifactory](https://ci.te2.biz/artifactory/webapp/#/artifacts/browse/tree/General/te2-npm) 
-Access your profile and generate an API key. Once you have an API key, click
-`Set Me Up` in the [TE2 Artifactory NPM Portal](https://ci.te2.biz/artifactory/webapp/#/artifacts/browse/tree/General/te2-npm) 
-
-Be sure to also configure npm to use the registry with: 
-`npm config set registry https://ci.te2.biz/artifactory/api/npm/te2-npm`
-Your local `~/.npmrc` file should like similar to:
-
-```
-_auth="<your-artifactory-auth>"
-always-auth=true
-email=<your-artifactory-email>
-registry=https://ci.te2.biz/artifactory/api/npm/te2-npm
-```
-
-Once your environment is setup, build the distributable with: `npm run build`, then
-`cd` into the created `dist` folder and run `npm publish`
 
 ## Installation
 
