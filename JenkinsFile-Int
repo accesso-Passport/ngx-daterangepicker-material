@@ -1,0 +1,35 @@
+pipeline {
+  agent {
+    label 'ec2-fleet'
+  }
+  options {
+    timestamps()
+    ansiColor('xterm')
+    timeout(time: 30, unit: 'MINUTES')
+  }
+  stages {
+    stage('Build Library') {
+	  steps {
+		configFileProvider([configFile(fileId: 'te2-artifactory-npmrc', variable: 'NPMRC_PATH')]) {
+		  sh '''#!/bin/bash -xe
+			cp ${NPMRC_PATH} ${HOME}/.npmrc
+		  '''
+		}
+		nodejs(nodeJSInstallationName: 'v14.15.1') {
+		  sh '''#!/bin/bash -xe
+			node --version
+			npm --version
+
+			npm ci
+			npm run build
+		  '''
+		  dir('dist') {
+			sh '''#!/bin/bash -xe
+			  npm publish
+			'''
+		  }
+		}
+	  }
+	}
+  }
+}

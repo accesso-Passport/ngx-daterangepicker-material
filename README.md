@@ -20,8 +20,9 @@ demo:  https://fetrarij.github.io/ngx-daterangepicker-material/
 
 ng-shared-library is being published to the TE2 Artifactory NPM Registry. 
 In order to use the repo in other applications via npm install you will need to 
-setup your environment to use the TE2 registry. Follow the steps provided by 
-clicking `Set Me Up` in the `TE2 Artifactory NPM Portal` 
+setup your environment to use the TE2 registry. Access the [TE2 Artifactory](https://ci.te2.biz/artifactory/webapp/#/artifacts/browse/tree/General/te2-npm) 
+Access your profile and generate an API key. Once you have an API key, click
+`Set Me Up` in the [TE2 Artifactory NPM Portal](https://ci.te2.biz/artifactory/webapp/#/artifacts/browse/tree/General/te2-npm) 
 
 Be sure to also configure npm to use the registry with: 
 `npm config set registry https://ci.te2.biz/artifactory/api/npm/te2-npm`
