@@ -426,18 +426,17 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 			return;
 		}
 
-		if (event.target.classList.contains('ngx-daterangepicker-action')) {
+		if (event.target.closest('.ngx-daterangepicker-action') || event.target.classList.contains('ngx-daterangepicker-action')) {
 			return;
 		}
 
-		const targetElement = document.getElementById(this.targetElementId);
-		if (targetElement && targetElement.contains(event.target)) {
+		if (document.getElementById(this.targetElementId)?.contains(event.target)) {
 			this.open(event);
 		}
 
 		if (
 			!this.elementRef.nativeElement.contains(event.target) &&
-			(event.target as HTMLSpanElement).className.indexOf('mat-option') === -1
+			(event.target as HTMLSpanElement)?.className?.indexOf('mat-option') === -1
 		) {
 			this.hide();
 		}
