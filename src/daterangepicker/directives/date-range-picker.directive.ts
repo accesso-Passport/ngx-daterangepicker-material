@@ -426,10 +426,6 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 			return;
 		}
 
-		if ((event.target as HTMLElement).closest('.ngx-daterangepicker-action')) {
-			return;
-		}
-
 		if (event.target?.classList?.contains('ngx-daterangepicker-action')) {
 			return;
 		}

@@ -1551,9 +1551,6 @@ class DateRangePickerDirective {
         if (!event.target) {
             return;
         }
-        if (event.target.closest('.ngx-daterangepicker-action')) {
-            return;
-        }
         if ((_b = (_a = event.target) === null || _a === void 0 ? void 0 : _a.classList) === null || _b === void 0 ? void 0 : _b.contains('ngx-daterangepicker-action')) {
             return;
         }
