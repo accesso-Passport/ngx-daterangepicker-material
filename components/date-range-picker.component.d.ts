@@ -12,8 +12,10 @@ export declare class DateRangePickerComponent implements OnInit {
     private el;
     private _ref;
     private _localeService;
-    locale: LocaleConfig;
-    ranges: DateRangePreset[];
+    set locale(value: LocaleConfig);
+    get locale(): LocaleConfig;
+    set ranges(value: DateRangePreset[]);
+    get ranges(): DateRangePreset[];
     constructor(el: ElementRef, _ref: ChangeDetectorRef, _localeService: LocaleService);
     private _old;
     chosenLabel: string;
