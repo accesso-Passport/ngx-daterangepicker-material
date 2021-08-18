@@ -436,7 +436,7 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 
 		if (
 			!this.elementRef.nativeElement.contains(event.target) &&
-			(event.target as HTMLSpanElement)?.className?.indexOf('mat-option') === -1
+			(event.target as Element)?.getAttribute('class')?.indexOf('mat-option') === -1
 		) {
 			this.hide();
 		}
