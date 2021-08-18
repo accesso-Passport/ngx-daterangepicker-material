@@ -11,6 +11,11 @@ set up your environment to use the TE2 registry. Access the TE2 Artifactory inst
 access your profile and generate an API key. Once you have an API key, click the `te2 - npm`
 option under the *Set Me Up* section.
 
+### Publishing
+
+*Note that you only need to perform these steps if you want to directly publish from the
+project. This is bad practice and jenkins jobs should be used for this.*
+
 Be sure to also configure npm to use the registry with:
 `npm config set registry https://ci.te2.biz/artifactory/api/npm/te2-npm`
 Your local (meaning for your project) `<project root>/.npmrc` file should like similar to:
@@ -22,8 +27,16 @@ email=<your-artifactory-email>
 registry=https://ci.te2.biz/artifactory/api/npm/te2-npm
 ```
 
-Once your environment is setup, build the distributable with: `npm run build`, then
-`cd` into the created `dist` folder and run `npm publish`
+After performing the build step as described below, then
+`cd` into the created `dist` folder and run `npm publish`.
+
+### Building
+
+Once your environment is set up, build the distributable with: `npm run build`.
+
+***
+
+*What follows is the documentation from the original project*
 
 [![Build Status](https://travis-ci.org/fetrarij/ngx-daterangepicker-material.svg?branch=master)](https://travis-ci.org/fetrarij/ngx-daterangepicker-material)
 [![npm version](https://badge.fury.io/js/ngx-daterangepicker-material.svg)](https://badge.fury.io/js/ngx-daterangepicker-material)
