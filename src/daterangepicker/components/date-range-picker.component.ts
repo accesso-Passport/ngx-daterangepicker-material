@@ -10,12 +10,12 @@ import {
 	ViewChild,
 	ViewEncapsulation
 } from '@angular/core';
-import {FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
-
+import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as _moment from 'moment';
+import { LocaleConfig } from '../date-range-picker.config';
 import { DateRangePreset } from '../date-range-picker.models';
-import {LocaleConfig} from '../date-range-picker.config';
-import {LocaleService} from '../services/locale.service';
+import { LocaleService } from '../services/locale.service';
+
 
 const moment = _moment;
 
@@ -58,7 +58,11 @@ export class DateRangePickerComponent implements OnInit {
 		return this._ranges;
 	}
 
-	constructor(private el: ElementRef, private _ref: ChangeDetectorRef, private _localeService: LocaleService) {
+	constructor(
+		private el: ElementRef,
+		private _ref: ChangeDetectorRef,
+		private _localeService: LocaleService
+	) {
 		this.choosedDate = new EventEmitter();
 		this.rangeClicked = new EventEmitter();
 		this.datesUpdated = new EventEmitter();
@@ -503,6 +507,25 @@ export class DateRangePickerComponent implements OnInit {
 		}
 		this._buildCells(calendar, side);
 	}
+
+	onStartDateKeyUp(event: KeyboardEvent): void {
+		const startDate: _moment.Moment = this.getDateFromKeyboardEvent(event);
+
+		if (startDate.isValid()) {
+			this.setStartDate(startDate.toDate());
+			this.updateView();
+		}
+	}
+
+	onEndDateKeyUp(event: KeyboardEvent): void {
+		const endDate: _moment.Moment = this.getDateFromKeyboardEvent(event);
+
+		if (endDate.isValid()) {
+			this.setEndDate(endDate.toDate());
+			this.updateView();
+		}
+	}
+
 	setStartDate(startDate) {
 		if (typeof startDate === 'string') {
 			this.startDate = moment(startDate, this.locale.format);
@@ -1147,6 +1170,20 @@ export class DateRangePickerComponent implements OnInit {
 
 		return areBothBefore || areBothAfter;
 	}
+
+	private getDateFromKeyboardEvent(event: KeyboardEvent): moment.Moment {
+		const value = event.target['value'];
+		const format = this.locale.displayFormat;
+		let startDate: _moment.Moment;
+		// Parse the value to date based on the locale format
+		if (format) {
+			startDate = moment(value, format, true);
+		} else {
+			startDate = moment(value);
+		}
+		return startDate;
+	}
+
 	/**
 	 *
 	 * @param date the date to add time
