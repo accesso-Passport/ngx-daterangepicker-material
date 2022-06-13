@@ -26,8 +26,8 @@
 				</button>
 				<input
 					matInput
+					(keyup)="onStartDateKeyUp($event)"
 					[value]="startDate | date: locale.displayFormat:undefined:locale.localeId"
-					readonly
 					data-cy="date-range-picker-start-date__input"
 				/>
 			</mat-form-field>
@@ -37,8 +37,8 @@
 				</button>
 				<input
 					matInput
+					(keyup)="onEndDateKeyUp($event)"
 					[value]="endDate | date: locale.displayFormat:undefined:locale.localeId"
-					readonly
 					data-cy="date-range-picker-end-date__input"
 				/>
 			</mat-form-field>
