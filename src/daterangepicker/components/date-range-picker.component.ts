@@ -16,7 +16,6 @@ import { LocaleConfig } from '../date-range-picker.config';
 import { DateRangePreset } from '../date-range-picker.models';
 import { LocaleService } from '../services/locale.service';
 
-
 const moment = _moment;
 
 export enum SideEnum {
@@ -508,8 +507,8 @@ export class DateRangePickerComponent implements OnInit {
 		this._buildCells(calendar, side);
 	}
 
-	onStartDateKeyUp(event: KeyboardEvent): void {
-		const startDate: _moment.Moment = this.getDateFromKeyboardEvent(event);
+	onStartDateFocusOut(event: FocusEvent): void {
+		const startDate: _moment.Moment = this.getDateFromFocusEvent(event);
 
 		if (startDate.isValid()) {
 			this.setStartDate(startDate.toDate());
@@ -517,8 +516,8 @@ export class DateRangePickerComponent implements OnInit {
 		}
 	}
 
-	onEndDateKeyUp(event: KeyboardEvent): void {
-		const endDate: _moment.Moment = this.getDateFromKeyboardEvent(event);
+	onEndDateFocusOut(event: FocusEvent): void {
+		const endDate: _moment.Moment = this.getDateFromFocusEvent(event);
 
 		if (endDate.isValid()) {
 			this.setEndDate(endDate.toDate());
@@ -1171,9 +1170,26 @@ export class DateRangePickerComponent implements OnInit {
 		return areBothBefore || areBothAfter;
 	}
 
-	private getDateFromKeyboardEvent(event: KeyboardEvent): moment.Moment {
+	/**
+	 * Get the value from the focus out event.
+	 * Check if display format and locale is set and if so, format the value based those settings.
+	 * We need to uppercase the format because the moment and Angular use different formats for days value.
+	 * Example: moment uses D for day of the month, Angular uses d for day of the month.
+	 * Month and year values should not be effected by the uppercase.
+	 *
+	 * @private
+	 * @param {FocusEvent} event
+	 * @return {*}  {moment.Moment}
+	 * @memberof DateRangePickerComponent
+	 */
+	private getDateFromFocusEvent(event: FocusEvent): moment.Moment {
 		const value = event.target['value'];
-		return this.locale.displayFormat ? moment(value, this.locale.displayFormat, true) : moment(value);
+
+		const format: string = this.locale.displayFormat?.toUpperCase();
+		if (format && this.locale.localeId) {
+			return moment(value, format, this.locale.localeId);
+		}
+		return moment(value);
 	}
 
 	/**
