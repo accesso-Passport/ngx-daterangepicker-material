@@ -11,20 +11,19 @@ import {
 	ViewEncapsulation
 } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import * as _dayjs from 'dayjs';
-const dayjs = _dayjs;
+import dayjs from 'dayjs';
+import arraySupport from 'dayjs/plugin/arraySupport';
+import isoWeek from 'dayjs/plugin/isoWeek';
+import localeData from 'dayjs/plugin/localeData';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
 import { LocaleConfig } from '../date-range-picker.config';
 import { DateRangePreset } from '../date-range-picker.models';
 import { LocaleService } from '../services/locale.service';
 
-import * as  localeData from 'dayjs/plugin/localeData';
 dayjs.extend(localeData);
-import * as LocalizedFormat from 'dayjs/plugin/localizedFormat';
 dayjs.extend(LocalizedFormat);
-import * as isoWeek from 'dayjs/plugin/isoWeek';
 dayjs.extend(isoWeek);
-import * as arraySupport from 'dayjs/plugin/arraySupport';
 dayjs.extend(arraySupport);
 
 export enum SideEnum {
@@ -93,9 +92,9 @@ export class DateRangePickerComponent implements OnInit {
 	// used in template for compile time support of enum values.
 	sideEnum = SideEnum;
 	@Input()
-	minDate: _dayjs.Dayjs = null;
+	minDate: dayjs.Dayjs = null;
 	@Input()
-	maxDate: _dayjs.Dayjs = null;
+	maxDate: dayjs.Dayjs = null;
 	@Input()
 	autoApply: Boolean = false;
 	@Input()
@@ -413,7 +412,7 @@ export class DateRangePickerComponent implements OnInit {
 			startDay = daysInLastMonth - 6;
 		}
 
-		let curDate = _dayjs([lastYear, lastMonth, startDay, 12, minute, second]);
+		let curDate = dayjs([lastYear, lastMonth, startDay, 12, minute, second]);
 
 		for (let i = 0, col = 0, row = 0; i < 42; i++, col++, curDate = dayjs(curDate).add(24, 'hour')) {
 			if (i > 0 && col % 7 === 0) {
@@ -519,7 +518,7 @@ export class DateRangePickerComponent implements OnInit {
 	}
 
 	onStartDateFocusOut(event: FocusEvent): void {
-		const startDate: _dayjs.Dayjs = this.getDateFromFocusEvent(event);
+		const startDate: dayjs.Dayjs = this.getDateFromFocusEvent(event);
 
 		if (startDate.isValid()) {
 			this.setStartDate(startDate.toDate());
@@ -528,7 +527,7 @@ export class DateRangePickerComponent implements OnInit {
 	}
 
 	onEndDateFocusOut(event: FocusEvent): void {
-		const endDate: _dayjs.Dayjs = this.getDateFromFocusEvent(event);
+		const endDate: dayjs.Dayjs = this.getDateFromFocusEvent(event);
 
 		if (endDate.isValid()) {
 			this.setEndDate(endDate.toDate());
@@ -1193,7 +1192,7 @@ export class DateRangePickerComponent implements OnInit {
 	 * @return {*}  {dayjs.Dayjs}
 	 * @memberof DateRangePickerComponent
 	 */
-	private getDateFromFocusEvent(event: FocusEvent): _dayjs.Dayjs {
+	private getDateFromFocusEvent(event: FocusEvent): dayjs.Dayjs {
 		const value = event.target['value'];
 
 		const format: string = this.locale.displayFormat?.toUpperCase();
@@ -1208,7 +1207,7 @@ export class DateRangePickerComponent implements OnInit {
 	 * @param date the date to add time
 	 * @param side left or right
 	 */
-	private _getDateWithTime(date, side: SideEnum): _dayjs.Dayjs {
+	private _getDateWithTime(date, side: SideEnum): dayjs.Dayjs {
 		let hour = parseInt(this.timepickerVariables[side].selectedHour, 10);
 		if (!this.timePicker24Hour) {
 			const ampm = this.timepickerVariables[side].ampmModel;
