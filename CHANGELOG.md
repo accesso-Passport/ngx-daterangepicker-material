@@ -237,7 +237,7 @@
   *  add event on click to range so we can get the label and the dates of the clicked range ([72d43b61](https://github.com/fetrarij/ngx-daterangepicker-material/commit/72d43b6179771c7521d6c2bb690584711a072ce3))
       ### new available event:  **\(rangeClicked)**
 
-        >Fired when clicked on range, and send an object with range label and dates value, eg:  `{label: 'This Month', dates: [Moment, Moment]}`
+        >Fired when clicked on range, and send an object with range label and dates value, eg:  `{label: 'This Month', dates: [Dayjs, Dayjs]}`
 
 
 ##### Bug Fixes

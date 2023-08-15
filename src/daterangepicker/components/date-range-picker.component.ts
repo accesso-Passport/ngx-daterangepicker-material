@@ -11,12 +11,21 @@ import {
 	ViewEncapsulation
 } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import * as _moment from 'moment';
+import * as _dayjs from 'dayjs';
+const dayjs = _dayjs;
+
 import { LocaleConfig } from '../date-range-picker.config';
 import { DateRangePreset } from '../date-range-picker.models';
 import { LocaleService } from '../services/locale.service';
 
-const moment = _moment;
+import * as  localeData from 'dayjs/plugin/localeData';
+dayjs.extend(localeData);
+import * as LocalizedFormat from 'dayjs/plugin/localizedFormat';
+dayjs.extend(LocalizedFormat);
+import * as isoWeek from 'dayjs/plugin/isoWeek';
+dayjs.extend(isoWeek);
+import * as arraySupport from 'dayjs/plugin/arraySupport';
+dayjs.extend(arraySupport);
 
 export enum SideEnum {
 	left = 'left',
@@ -75,18 +84,18 @@ export class DateRangePickerComponent implements OnInit {
 	daterangepicker: { start: FormControl; end: FormControl } = { start: new FormControl(), end: new FormControl() };
 	applyBtn: { disabled: boolean } = { disabled: false };
 	@Input()
-	startDate = moment().startOf('day');
+	startDate = dayjs().startOf('day');
 	@Input()
-	endDate = moment().endOf('day');
+	endDate = dayjs().endOf('day');
 
 	@Input()
 	dateLimit: number = null;
 	// used in template for compile time support of enum values.
 	sideEnum = SideEnum;
 	@Input()
-	minDate: _moment.Moment = null;
+	minDate: _dayjs.Dayjs = null;
 	@Input()
-	maxDate: _moment.Moment = null;
+	maxDate: _dayjs.Dayjs = null;
 	@Input()
 	autoApply: Boolean = false;
 	@Input()
@@ -124,6 +133,8 @@ export class DateRangePickerComponent implements OnInit {
 	@Input()
 	emptyWeekRowClass: string = null;
 	@Input()
+	emptyWeekColumnClass: string = null;
+	@Input()
 	firstDayOfNextMonthClass: string = null;
 	@Input()
 	lastDayOfPreviousMonthClass: string = null;
@@ -155,8 +166,8 @@ export class DateRangePickerComponent implements OnInit {
 	// some state information
 	isShown: Boolean = false;
 	inline = true;
-	leftCalendar: any = { month: moment() };
-	rightCalendar: any = { month: moment().add(1, 'month') };
+	leftCalendar: any = { month: dayjs() };
+	rightCalendar: any = { month: dayjs().add(1, 'month') };
 	showCalInRanges: Boolean = false;
 
 	options: any = {}; // should get some opt from user
@@ -372,16 +383,16 @@ export class DateRangePickerComponent implements OnInit {
 		const hour = mainCalendar.month.hour();
 		const minute = mainCalendar.month.minute();
 		const second = mainCalendar.month.second();
-		const daysInMonth = moment([year, month]).daysInMonth();
-		const firstDay = moment([year, month, 1]);
-		const lastDay = moment([year, month, daysInMonth]);
-		const lastMonth = moment(firstDay)
+		const daysInMonth = dayjs([year, month]).daysInMonth();
+		const firstDay = dayjs([year, month, 1]);
+		const lastDay = dayjs([year, month, daysInMonth]);
+		const lastMonth = dayjs(firstDay)
 			.subtract(1, 'month')
 			.month();
-		const lastYear = moment(firstDay)
+		const lastYear = dayjs(firstDay)
 			.subtract(1, 'month')
 			.year();
-		const daysInLastMonth = moment([lastYear, lastMonth]).daysInMonth();
+		const daysInLastMonth = dayjs([lastYear, lastMonth]).daysInMonth();
 		const dayOfWeek = firstDay.day();
 		// initialize a 6 rows x 7 columns array for the calendar
 		const calendar: any = [];
@@ -402,9 +413,9 @@ export class DateRangePickerComponent implements OnInit {
 			startDay = daysInLastMonth - 6;
 		}
 
-		let curDate = moment([lastYear, lastMonth, startDay, 12, minute, second]);
+		let curDate = _dayjs([lastYear, lastMonth, startDay, 12, minute, second]);
 
-		for (let i = 0, col = 0, row = 0; i < 42; i++, col++, curDate = moment(curDate).add(24, 'hour')) {
+		for (let i = 0, col = 0, row = 0; i < 42; i++, col++, curDate = dayjs(curDate).add(24, 'hour')) {
 			if (i > 0 && col % 7 === 0) {
 				col = 0;
 				row++;
@@ -484,7 +495,7 @@ export class DateRangePickerComponent implements OnInit {
 		if (this.showDropdowns) {
 			const currentMonth = calendar[1][1].month();
 			const currentYear = calendar[1][1].year();
-			const realCurrentYear = moment().year();
+			const realCurrentYear = dayjs().year();
 			const maxYear = (maxDate && maxDate.year()) || realCurrentYear + 5;
 			const minYear = (minDate && minDate.year()) || realCurrentYear - 100;
 			const inMinYear = currentYear === minYear;
@@ -508,7 +519,7 @@ export class DateRangePickerComponent implements OnInit {
 	}
 
 	onStartDateFocusOut(event: FocusEvent): void {
-		const startDate: _moment.Moment = this.getDateFromFocusEvent(event);
+		const startDate: _dayjs.Dayjs = this.getDateFromFocusEvent(event);
 
 		if (startDate.isValid()) {
 			this.setStartDate(startDate.toDate());
@@ -517,7 +528,7 @@ export class DateRangePickerComponent implements OnInit {
 	}
 
 	onEndDateFocusOut(event: FocusEvent): void {
-		const endDate: _moment.Moment = this.getDateFromFocusEvent(event);
+		const endDate: _dayjs.Dayjs = this.getDateFromFocusEvent(event);
 
 		if (endDate.isValid()) {
 			this.setEndDate(endDate.toDate());
@@ -527,11 +538,11 @@ export class DateRangePickerComponent implements OnInit {
 
 	setStartDate(startDate) {
 		if (typeof startDate === 'string') {
-			this.startDate = moment(startDate, this.locale.format);
+			this.startDate = dayjs(startDate, this.locale.format);
 		}
 
 		if (typeof startDate === 'object') {
-			this.startDate = moment(startDate);
+			this.startDate = dayjs(startDate);
 		}
 		if (!this.timePicker) {
 			this.startDate = this.startDate.startOf('day');
@@ -570,11 +581,11 @@ export class DateRangePickerComponent implements OnInit {
 
 	setEndDate(endDate) {
 		if (typeof endDate === 'string') {
-			this.endDate = moment(endDate, this.locale.format);
+			this.endDate = dayjs(endDate, this.locale.format);
 		}
 
 		if (typeof endDate === 'object') {
-			this.endDate = moment(endDate);
+			this.endDate = dayjs(endDate);
 		}
 		if (!this.timePicker) {
 			this.endDate = this.endDate
@@ -770,21 +781,21 @@ export class DateRangePickerComponent implements OnInit {
 		this.updateElement();
 	}
 
-	clickApply(e?) {
+	clickApply(e?: any) {
 		if (!this.singleDatePicker && this.startDate && !this.endDate) {
 			this.endDate = this.startDate.clone();
 			this.calculateChosenLabel();
 		}
 		if (this.isInvalidDate && this.startDate && this.endDate) {
 			// get if there are invalid date between range
-			const d = this.startDate.clone();
+			let d = this.startDate.clone();
 			while (d.isBefore(this.endDate)) {
 				if (this.isInvalidDate(d)) {
 					this.endDate = d.subtract(1, 'days');
 					this.calculateChosenLabel();
 					break;
 				}
-				d.add(1, 'days');
+				d = d.add(1, 'day');
 			}
 		}
 		if (this.chosenLabel) {
@@ -797,7 +808,7 @@ export class DateRangePickerComponent implements OnInit {
 		}
 	}
 
-	clickCancel(e) {
+	clickCancel(e: any) {
 		this.startDate = this._old.start;
 		this.endDate = this._old.end;
 		if (this.inline) {
@@ -932,12 +943,12 @@ export class DateRangePickerComponent implements OnInit {
 	 */
 	clickPrev(side: SideEnum) {
 		if (side === SideEnum.left) {
-			this.leftCalendar.month.subtract(1, 'month');
+			this.leftCalendar.month = this.leftCalendar.month.subtract(1, 'month');
 			if (this.linkedCalendars) {
-				this.rightCalendar.month.subtract(1, 'month');
+				this.rightCalendar.month = this.rightCalendar.month.subtract(1, 'month');
 			}
 		} else {
-			this.rightCalendar.month.subtract(1, 'month');
+			this.rightCalendar.month = this.rightCalendar.month.subtract(1, 'month');
 		}
 		this.updateCalendars();
 	}
@@ -947,11 +958,11 @@ export class DateRangePickerComponent implements OnInit {
 	 */
 	clickNext(side: SideEnum) {
 		if (side === SideEnum.left) {
-			this.leftCalendar.month.add(1, 'month');
+			this.leftCalendar.month = this.leftCalendar.month.add(1, 'month');
 		} else {
-			this.rightCalendar.month.add(1, 'month');
+			this.rightCalendar.month = this.rightCalendar.month.add(1, 'month');
 			if (this.linkedCalendars) {
-				this.leftCalendar.month.add(1, 'month');
+				this.leftCalendar.month = this.leftCalendar.month.add(1, 'month');
 			}
 		}
 		this.updateCalendars();
@@ -1028,7 +1039,7 @@ export class DateRangePickerComponent implements OnInit {
 	}
 	/**
 	 *  Click on the custom range
-	 * @param e: Event
+	 * @param e
 	 * @param preset
 	 */
 	clickRange(e, preset: DateRangePreset) {
@@ -1144,8 +1155,8 @@ export class DateRangePickerComponent implements OnInit {
 	 *  clear the daterange picker
 	 */
 	clear() {
-		this.startDate = moment().startOf('day');
-		this.endDate = moment().endOf('day');
+		this.startDate = dayjs().startOf('day');
+		this.endDate = dayjs().endOf('day');
 		this.updateCalendars();
 		this.updateView();
 	}
@@ -1173,23 +1184,23 @@ export class DateRangePickerComponent implements OnInit {
 	/**
 	 * Get the value from the focus out event.
 	 * Check if display format and locale is set and if so, format the value based those settings.
-	 * We need to uppercase the format because the moment and Angular use different formats for days value.
-	 * Example: moment uses D for day of the month, Angular uses d for day of the month.
+	 * We need to uppercase the format because dayjs and Angular use different formats for days value.
+	 * Example: dayjs uses D for day of the month, Angular uses d for day of the month.
 	 * Month and year values should not be effected by the uppercase.
 	 *
 	 * @private
 	 * @param {FocusEvent} event
-	 * @return {*}  {moment.Moment}
+	 * @return {*}  {dayjs.Dayjs}
 	 * @memberof DateRangePickerComponent
 	 */
-	private getDateFromFocusEvent(event: FocusEvent): moment.Moment {
+	private getDateFromFocusEvent(event: FocusEvent): _dayjs.Dayjs {
 		const value = event.target['value'];
 
 		const format: string = this.locale.displayFormat?.toUpperCase();
 		if (format && this.locale.localeId) {
-			return moment(value, format, this.locale.localeId);
+			return dayjs(value, format, this.locale.localeId);
 		}
-		return moment(value);
+		return dayjs(value);
 	}
 
 	/**
@@ -1197,7 +1208,7 @@ export class DateRangePickerComponent implements OnInit {
 	 * @param date the date to add time
 	 * @param side left or right
 	 */
-	private _getDateWithTime(date, side: SideEnum): _moment.Moment {
+	private _getDateWithTime(date, side: SideEnum): _dayjs.Dayjs {
 		let hour = parseInt(this.timepickerVariables[side].selectedHour, 10);
 		if (!this.timePicker24Hour) {
 			const ampm = this.timepickerVariables[side].ampmModel;
@@ -1223,9 +1234,9 @@ export class DateRangePickerComponent implements OnInit {
 		this.locale = { ...this._localeService.config, ...this.locale };
 		if (!this.locale.format) {
 			if (this.timePicker) {
-				this.locale.format = moment.localeData().longDateFormat('lll');
+				this.locale.format = dayjs.localeData().longDateFormat('lll');
 			} else {
-				this.locale.format = moment.localeData().longDateFormat('L');
+				this.locale.format = dayjs.localeData().longDateFormat('L');
 			}
 		}
 	}
