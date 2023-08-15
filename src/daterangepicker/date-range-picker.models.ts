@@ -1,10 +1,10 @@
-import * as moment from 'moment';
+import * as dayjs from 'dayjs';
 
 export interface DateRangePreset {
 	key: string;
 	label: string;
 	range: {
-		start: moment.Moment,
-		end: moment.Moment
+		start: dayjs.Dayjs,
+		end: dayjs.Dayjs
 	};
 }

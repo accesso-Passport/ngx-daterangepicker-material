@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
+import * as dayjs from 'dayjs';
+import * as weekday from 'dayjs/plugin/weekday';
+dayjs.extend(weekday);
 
 @Component({
 	selector: 'single-datepicker',
@@ -7,14 +9,14 @@ import * as moment from 'moment';
 	styleUrls: ['./single-datepicker.component.scss']
 })
 export class SingleDatepickerComponent implements OnInit {
-	selected = moment();
+	selected = dayjs();
 
 	constructor() {}
 	ngOnInit() {}
-	isInvalidDate(date) {
+	isInvalidDate(date: dayjs.Dayjs) {
 		return date.weekday() === 0;
 	}
-	isCustomDate(date) {
+	isCustomDate(date: dayjs.Dayjs) {
 		return date.weekday() === 0 || date.weekday() === 6 ? 'mycustomdate' : false;
 	}
 }

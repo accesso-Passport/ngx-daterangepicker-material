@@ -1,7 +1,7 @@
 import { InjectionToken } from '@angular/core';
-import * as _moment from 'moment';
-
-const moment = _moment;
+import * as _dayjs from 'dayjs';
+import * as localeData from 'dayjs/plugin/localeData';
+_dayjs.extend(localeData);
 
 export const LOCALE_CONFIG = new InjectionToken<LocaleConfig>('daterangepicker.config');
 /**
@@ -37,7 +37,7 @@ export const DefaultLocaleConfig: LocaleConfig = {
 	startDateLabel: 'Start Date',
 	endDateLabel: 'End Date',
 	customRangeLabel: 'Presets',
-	daysOfWeek: moment.weekdaysMin(),
-	monthNames: moment.months(),
-	firstDay: moment.localeData().firstDayOfWeek()
+	daysOfWeek: _dayjs.weekdaysMin(),
+	monthNames: _dayjs.months(),
+	firstDay: _dayjs.localeData().firstDayOfWeek()
 };

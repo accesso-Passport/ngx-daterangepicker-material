@@ -1,33 +1,28 @@
 import {
-	ApplicationRef,
-	ChangeDetectorRef,
-	ComponentFactoryResolver,
 	Directive,
-	DoCheck,
+	ViewContainerRef,
+	ComponentFactoryResolver,
 	ElementRef,
-	EmbeddedViewRef,
-	EventEmitter,
-	forwardRef,
 	HostListener,
-	Injector,
+	forwardRef,
+	ChangeDetectorRef,
+	OnInit,
+	OnChanges,
+	SimpleChanges,
 	Input,
+	DoCheck,
 	KeyValueDiffer,
 	KeyValueDiffers,
-	OnChanges,
-	OnInit,
 	Output,
+	EventEmitter,
 	Renderer2,
-	SimpleChanges,
-	ViewContainerRef
+	HostBinding
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import * as _moment from 'moment';
 import { DateRangePickerComponent } from '../components/date-range-picker.component';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import * as _dayjs from 'dayjs';
 import { LocaleConfig } from '../date-range-picker.config';
-import { DateRangePreset } from '../date-range-picker.models';
 import { LocaleService } from '../services/locale.service';
-
-const moment = _moment;
 
 @Directive({
 	// tslint:disable-next-line:directive-selector
@@ -42,109 +37,30 @@ const moment = _moment;
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => DateRangePickerDirective),
-			multi: true
+			useExisting: forwardRef(() => DateRangePickerDirective), multi: true
 		}
 	]
 })
 export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
-	@Input() set locale(value) {
-		this._locale = { ...this._localeService.config, ...value };
-	}
-	get locale(): any {
-		return this._locale;
-	}
-	@Input() set startKey(value) {
-		if (value !== null) {
-			this._startKey = value;
-		} else {
-			this._startKey = 'startDate';
-		}
-	}
-	@Input() set endKey(value) {
-		if (value !== null) {
-			this._endKey = value;
-		} else {
-			this._endKey = 'endDate';
-		}
-	}
-
-	get value() {
-		return this._value || null;
-	}
-	set value(val) {
-		this._value = val;
-		this._onChange(val);
-		this._changeDetectorRef.markForCheck();
-	}
-
-	constructor(
-		public applicationRef: ApplicationRef,
-		public viewContainerRef: ViewContainerRef,
-		public injector: Injector,
-		public _changeDetectorRef: ChangeDetectorRef,
-		private _componentFactoryResolver: ComponentFactoryResolver,
-		private _el: ElementRef,
-		private _renderer: Renderer2,
-		private differs: KeyValueDiffers,
-		private _localeService: LocaleService,
-		private elementRef: ElementRef,
-	) {
-		this.drops = 'down';
-		this.opens = 'auto';
-
-		const applicationRoot = document.body.querySelector('*[ng-version]') as HTMLElement;
-		const dateRangePickerElement = applicationRoot.querySelector('ngx-daterangepicker-material');
-		const componentFactory = this._componentFactoryResolver.resolveComponentFactory(DateRangePickerComponent);
-		const componentRef = componentFactory.create(injector);
-		this.applicationRef.attachView(componentRef.hostView);
-		const componentElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-		componentElem.classList.add('hidden');
-
-		if (dateRangePickerElement && applicationRoot.contains(dateRangePickerElement)) {
-			dateRangePickerElement.classList.add('hidden');
-			applicationRoot.removeChild(dateRangePickerElement);
-		}
-
-		applicationRoot.appendChild(componentElem);
-
-		this.picker = <DateRangePickerComponent>componentRef.instance;
-		this.picker.inline = false;
-	}
 	public picker: DateRangePickerComponent;
 	private _onChange = Function.prototype;
 	private _onTouched = Function.prototype;
 	private _validatorChange = Function.prototype;
+	private _disabled: boolean;
 	private _value: any;
 	private localeDiffer: KeyValueDiffer<string, any>;
 	@Input()
-	minDate: _moment.Moment;
+	minDate: _dayjs.Dayjs;
 	@Input()
-	maxDate: _moment.Moment;
+	maxDate: _dayjs.Dayjs;
 	@Input()
 	autoApply: boolean;
-
-	@Input()
-	targetElementId: string;
-	@Input()
-	topAdjustment: number;
-	@Input()
-	leftAdjustment: number;
-	@Input()
-	isFullScreenPicker: boolean;
-
 	@Input()
 	alwaysShowCalendars: boolean;
 	@Input()
 	showCustomRangeLabel: boolean;
 	@Input()
 	linkedCalendars: boolean;
-	@Input()
-	buttonClassApply: string;
-	@Input()
-	buttonClassReset: string;
-	@Input()
-	buttonClassRange: string;
 	@Input()
 	dateLimit: number = null;
 	@Input()
@@ -160,11 +76,13 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 	@Input()
 	isCustomDate: Function;
 	@Input()
+	isTooltipDate: Function;
+	@Input()
 	showClearButton: boolean;
 	@Input()
 	customRangeDirection: boolean;
 	@Input()
-	ranges: DateRangePreset[];
+	ranges: any;
 	@Input()
 	opens: string;
 	@Input()
@@ -174,6 +92,8 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 	lastMonthDayClass: string;
 	@Input()
 	emptyWeekRowClass: string;
+	@Input()
+	emptyWeekColumnClass: string;
 	@Input()
 	firstDayOfNextMonthClass: string;
 	@Input()
@@ -197,23 +117,72 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 	timePickerSeconds: Boolean = false;
 	@Input() closeOnAutoApply = true;
 	_locale: LocaleConfig = {};
+	@Input() set locale(value) {
+		this._locale = {...this._localeService.config, ...value};
+	}
+	get locale(): any {
+		return this._locale;
+	}
 	@Input()
 	private _endKey: string = 'endDate';
 	private _startKey: string = 'startDate';
-	notForChangesProperty: Array<string> = ['locale', 'endKey', 'startKey'];
+	@Input() set startKey(value) {
+		if (value !== null) {
+			this._startKey = value;
+		} else {
+			this._startKey = 'startDate';
+		}
+	}
+	@Input() set endKey(value) {
+		if (value !== null) {
+			this._endKey = value;
+		} else {
+			this._endKey = 'endDate';
+		}
+	}
+	notForChangesProperty: Array<string> = [
+		'locale',
+		'endKey',
+		'startKey'
+	];
 
-	// tslint:disable-next-line:no-output-on-prefix no-output-rename
+	get value() {
+		return this._value || null;
+	}
+	set value(val) {
+		this._value = val;
+		this._onChange(val);
+		this._changeDetectorRef.markForCheck();
+	}
+
+	// tslint:disable-next-line:no-output-rename no-output-on-prefix
 	@Output('change') onChange: EventEmitter<Object> = new EventEmitter();
-	// tslint:disable-next-line:no-output-rename
+	// tslint:disable-next-line:no-output-on-prefix no-output-rename
 	@Output('rangeClicked') rangeClicked: EventEmitter<Object> = new EventEmitter();
-	// tslint:disable-next-line:no-output-rename
+	// tslint:disable-next-line:no-output-on-prefix no-output-rename
 	@Output('datesUpdated') datesUpdated: EventEmitter<Object> = new EventEmitter();
 	@Output() startDateChanged: EventEmitter<Object> = new EventEmitter();
 	@Output() endDateChanged: EventEmitter<Object> = new EventEmitter();
 	$event: any;
-
-	scrollPos = 0;
-
+	@HostBinding('disabled') get disabled() { return this._disabled; }
+	constructor(
+		public viewContainerRef: ViewContainerRef,
+		public _changeDetectorRef: ChangeDetectorRef,
+		private _componentFactoryResolver: ComponentFactoryResolver,
+		private _el: ElementRef,
+		private _renderer: Renderer2,
+		private differs: KeyValueDiffers,
+		private _localeService: LocaleService,
+		private elementRef: ElementRef
+	) {
+		this.drops = 'down';
+		this.opens = 'auto';
+		const componentFactory = this._componentFactoryResolver.resolveComponentFactory(DateRangePickerComponent);
+		viewContainerRef.clear();
+		const componentRef = viewContainerRef.createComponent(componentFactory);
+		this.picker = (<DateRangePickerComponent>componentRef.instance);
+		this.picker.inline = false; // set inline to false for all directive usage
+	}
 	ngOnInit() {
 		this.picker.startDateChanged.asObservable().subscribe((itemChanged: any) => {
 			this.startDateChanged.emit(itemChanged);
@@ -242,16 +211,16 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 		this.picker.firstMonthDayClass = this.firstMonthDayClass;
 		this.picker.lastMonthDayClass = this.lastMonthDayClass;
 		this.picker.emptyWeekRowClass = this.emptyWeekRowClass;
+		this.picker.emptyWeekColumnClass = this.emptyWeekColumnClass;
 		this.picker.firstDayOfNextMonthClass = this.firstDayOfNextMonthClass;
 		this.picker.lastDayOfPreviousMonthClass = this.lastDayOfPreviousMonthClass;
 		this.picker.drops = this.drops;
 		this.picker.opens = this.opens;
 		this.localeDiffer = this.differs.find(this.locale).create();
 		this.picker.closeOnAutoApply = this.closeOnAutoApply;
-		this.picker.isFullScreenPicker = this.isFullScreenPicker;
 	}
 
-	ngOnChanges(changes: SimpleChanges): void {
+	ngOnChanges(changes: SimpleChanges): void  {
 		for (const change in changes) {
 			if (changes.hasOwnProperty(change)) {
 				if (this.notForChangesProperty.indexOf(change) === -1) {
@@ -275,6 +244,9 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 	}
 
 	open(event?: any) {
+		if (this.disabled) {
+			return;
+		}
 		this.picker.show(event);
 		setTimeout(() => {
 			this.setPosition();
@@ -305,6 +277,9 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 	registerOnTouched(fn) {
 		this._onTouched = fn;
 	}
+	setDisabledState(state: boolean): void {
+		this._disabled = state;
+	}
 	private setValue(val: any) {
 		if (val) {
 			this.value = val;
@@ -328,63 +303,49 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 	setPosition() {
 		let style;
 		let containerTop;
-		this.topAdjustment = this.topAdjustment ? +this.topAdjustment : 0;
-		this.leftAdjustment = this.leftAdjustment ? +this.leftAdjustment : 0;
-
-		// todo: revisit the offsets where when both the shared components are done and the order search rework is finished
-		const container = this.picker.pickerContainer.nativeElement as HTMLElement;
-		let element = this._el.nativeElement as HTMLElement;
-
-		if (this.targetElementId) {
-			element = document.getElementById(this.targetElementId);
-		} else {
-			element = element.parentElement;
-		}
-
-		const elementLocation = element.getBoundingClientRect();
-
+		const container = this.picker.pickerContainer.nativeElement;
+		const element = this._el.nativeElement;
 		if (this.drops && this.drops === 'up') {
-			containerTop = element.offsetTop - container.clientHeight + this.topAdjustment + 'px';
+			containerTop = (element.offsetTop - container.clientHeight) + 'px';
 		} else {
-			containerTop = elementLocation.top + this.topAdjustment + 'px';
+			containerTop = 'auto';
 		}
 		if (this.opens === 'left') {
 			style = {
 				top: containerTop,
-				left: ((elementLocation.left - container.clientWidth + elementLocation.width - 100)  + this.leftAdjustment) + 'px',
+				left: (element.offsetLeft - container.clientWidth + element.clientWidth) + 'px',
 				right: 'auto'
 			};
 		} else if (this.opens === 'center') {
 			style = {
 				top: containerTop,
-				left: ((elementLocation.left + elementLocation.width / 2 - container.clientWidth / 2)  + this.leftAdjustment) + 'px',
+				left: (element.offsetLeft  +  element.clientWidth / 2
+					- container.clientWidth / 2) + 'px',
 				right: 'auto'
 			};
 		} else if (this.opens === 'right') {
 			style = {
 				top: containerTop,
-				left: (elementLocation.left + this.leftAdjustment) + 'px',
+				left: element.offsetLeft  + 'px',
 				right: 'auto'
 			};
 		} else {
-			const position = elementLocation.left + elementLocation.width / 2 - container.clientWidth / 2;
-
+			const position = element.offsetLeft  +  element.clientWidth / 2 - container.clientWidth / 2;
 			if (position < 0) {
 				style = {
 					top: containerTop,
-					left: (elementLocation.left + this.leftAdjustment) + 'px',
+					left: element.offsetLeft + 'px',
 					right: 'auto'
 				};
 			} else {
 				style = {
 					top: containerTop,
-					left: (position + this.leftAdjustment) + 'px',
+					left: position + 'px',
 					right: 'auto'
 				};
 			}
 		}
-
-		if (!this.isFullScreenPicker && style) {
+		if (style) {
 			this._renderer.setStyle(container, 'top', style.top);
 			this._renderer.setStyle(container, 'left', style.left);
 			this._renderer.setStyle(container, 'right', style.right);
@@ -398,14 +359,13 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 			return;
 		}
 		const dateString = e.target.value.split(this.picker.locale.separator);
-		let start = null,
-			end = null;
+		let start = null, end = null;
 		if (dateString.length === 2) {
-			start = moment(dateString[0], this.picker.locale.format);
-			end = moment(dateString[1], this.picker.locale.format);
+			start = _dayjs(dateString[0], this.picker.locale.format);
+			end = _dayjs(dateString[1], this.picker.locale.format);
 		}
 		if (this.singleDatePicker || start === null || end === null) {
-			start = moment(e.target.value, this.picker.locale.format);
+			start = _dayjs(e.target.value, this.picker.locale.format);
 			end = start;
 		}
 		if (!start.isValid() || !end.isValid()) {
@@ -414,8 +374,8 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 		this.picker.setStartDate(start);
 		this.picker.setEndDate(end);
 		this.picker.updateView();
-	}
 
+	}
 	/**
 	 * For click outside of the calendar's container
 	 * @param event event object
@@ -426,18 +386,11 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 			return;
 		}
 
-		if (event.target.closest('.ngx-daterangepicker-action') || event.target.classList.contains('ngx-daterangepicker-action')) {
+		if (event.target.classList.contains('ngx-daterangepicker-action')) {
 			return;
 		}
 
-		if (document.getElementById(this.targetElementId)?.contains(event.target)) {
-			this.open(event);
-		}
-
-		if (
-			!this.elementRef.nativeElement.contains(event.target) &&
-			(event.target as Element)?.getAttribute('class')?.indexOf('mat-option') === -1
-		) {
+		if (!this.elementRef.nativeElement.contains(event.target)) {
 			this.hide();
 		}
 	}

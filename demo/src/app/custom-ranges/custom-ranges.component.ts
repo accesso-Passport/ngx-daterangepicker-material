@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
+import * as dayjs from 'dayjs';
 import { DateRangePreset } from '../../../../src/daterangepicker/date-range-picker.models';
 
 @Component({
@@ -12,44 +12,44 @@ export class CustomRangesComponent implements OnInit {
 	alwaysShowCalendars: boolean;
 	showRangeLabelOnInput: boolean;
 	keepCalendarOpeningWithRange: boolean;
-	maxDate: moment.Moment;
-	minDate: moment.Moment;
-	invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'), moment().add(5, 'days')];
+	maxDate: dayjs.Dayjs;
+	minDate: dayjs.Dayjs;
+	invalidDates: dayjs.Dayjs[] = [dayjs().add(2, 'days'), dayjs().add(3, 'days'), dayjs().add(5, 'days')];
 	ranges: DateRangePreset[] = [
 		{
 			key: 'today',
 			label: 'Today',
-			range: {start: moment(), end: moment()}
+			range: {start: dayjs(), end: dayjs()}
 		},
 		{
 			key: 'yesterday',
 			label: 'Yesterday!',
-			range: {start: moment().subtract(1, 'days'), end: moment().subtract(1, 'days')}
+			range: {start: dayjs().subtract(1, 'days'), end: dayjs().subtract(1, 'days')}
 		},
 		{
 			key: 'last-seven-days',
 			label: 'Last 7 Days',
-			range: {start: moment().subtract(6, 'days'), end: moment()}
+			range: {start: dayjs().subtract(6, 'days'), end: dayjs()}
 		},
 		{
 			key: 'last-thirty-days',
 			label: 'Last 30 Days',
-			range: {start: moment().subtract(29, 'days'), end: moment()}
+			range: {start: dayjs().subtract(29, 'days'), end: dayjs()}
 		}
 	];
 
-	isInvalidDate = (m: moment.Moment) => {
+	isInvalidDate = (m: dayjs.Dayjs) => {
 		return this.invalidDates.some(d => d.isSame(m, 'day'));
 	}
 
 	constructor() {
-		this.maxDate = moment().add(2, 'weeks');
-		this.minDate = moment().subtract(3, 'days');
+		this.maxDate = dayjs().add(2, 'weeks');
+		this.minDate = dayjs().subtract(3, 'days');
 
 		this.alwaysShowCalendars = true;
 		this.keepCalendarOpeningWithRange = true;
 		this.showRangeLabelOnInput = true;
-		this.selected = { startDate: moment().subtract(1, 'days'), endDate: moment().subtract(1, 'days') };
+		this.selected = { startDate: dayjs().subtract(1, 'days'), endDate: dayjs().subtract(1, 'days') };
 	}
 	rangeClicked(range) {
 		console.log('[rangeClicked] range is : ', range);

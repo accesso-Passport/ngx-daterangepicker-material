@@ -42,7 +42,7 @@ Once your environment is set up, build the distributable with: `npm run build`.
 [![npm version](https://badge.fury.io/js/ngx-daterangepicker-material.svg)](https://badge.fury.io/js/ngx-daterangepicker-material)
 [![last commit](https://img.shields.io/github/last-commit/fetrarij/ngx-daterangepicker-material.svg)](https://github.com/fetrarij/ngx-daterangepicker-material/commits/master)
 
- This plugin is compatible with Angular 2+ , work fine with the latest version of angular. This plugin uses moment.js.
+ This plugin is compatible with Angular 2+ , work fine with the latest version of angular. This plugin uses dayjs.
 
 This plugin is a rewrite to angular from [bootstrap daterangepicker](http://www.daterangepicker.com), so it doesn't depends on jquery nor bootstrap.
 
@@ -89,7 +89,7 @@ Html:
 Typescript: 
 
 ````typescript
-selected: {startDate: Moment, endDate: Moment};
+selected: {startDate: Dayjs, endDate: Dayjs};
 ````
 ### with some options: 
 Html:
@@ -106,7 +106,7 @@ Html:
 Typescript: 
 
 ````typescript
-selected: {start: Moment, end: Moment};
+selected: {start: Dayjs, end: Dayjs};
 ````
 You can [play with our online demo here](https://fetrarij.github.io/ngx-daterangepicker-material/)
 and [browse our demo code here](./demo/src/app).
@@ -136,7 +136,7 @@ You can use the component directly in your templates, which will set its `inline
 
 ### minDate, maxDate
 
- >To set the minimal and maximal date, these options are a moment date
+ >To set the minimal and maximal date, these options are a dayjs date
 
 ### dateLimit
 
@@ -155,8 +155,8 @@ You can use the component directly in your templates, which will set its `inline
     applyLabel: 'Okay', // detault is 'Apply'
     clearLabel: 'Clear', // detault is 'Clear'
     customRangeLabel: 'Custom range',
-    daysOfWeek: moment.weekdaysMin(),
-    monthNames: moment.monthsShort(),
+    daysOfWeek: dayjs.weekdaysMin(),
+    monthNames: dayjs.monthsShort(),
     firstDay: 1 // first day is monday
 }
 ```
@@ -183,12 +183,12 @@ the model we got would be:  `{start: Date, end: Date}`
 ```
 ```javascript
 ranges: any = {
-    'Today': [moment(), moment()],
-    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-    'This Month': [moment().startOf('month'), moment().endOf('month')],
-    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+    'Today': [dayjs(), dayjs()],
+    'Yesterday': [dayjs().subtract(1, 'days'), dayjs().subtract(1, 'days')],
+    'Last 7 Days': [dayjs().subtract(6, 'days'), dayjs()],
+    'Last 30 Days': [dayjs().subtract(29, 'days'), dayjs()],
+    'This Month': [dayjs().startOf('month'), dayjs().endOf('month')],
+    'Last Month': [dayjs().subtract(1, 'month').startOf('month'), dayjs().subtract(1, 'month').endOf('month')]
   }
 ```
 #### Other options with ranges
@@ -237,11 +237,11 @@ You can use theses options:
 
 ### \(rangeClicked)
 
- >Fired when clicked on range, and send an object with range label and dates value, eg:  `{label: 'This Month', dates: [Moment, Moment]}`
+ >Fired when clicked on range, and send an object with range label and dates value, eg:  `{label: 'This Month', dates: [Dayjs, Dayjs]}`
 
 ### \(datesUpdated)
 
- >Fires when the date model is updated, like applying (if you have activated the apply button), or when selecting a range or date without the apply button, and sends an object containing start and end dates, eg: `{startDate: Moment, endDate: Moment}`
+ >Fires when the date model is updated, like applying (if you have activated the apply button), or when selecting a range or date without the apply button, and sends an object containing start and end dates, eg: `{startDate: Dayjs, endDate: Dayjs}`
 
 ### Global locale
 

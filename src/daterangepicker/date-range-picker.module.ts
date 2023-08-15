@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 import { DateRangePickerComponent } from './components/date-range-picker.component';
 import { LOCALE_CONFIG, LocaleConfig } from './date-range-picker.config';
@@ -35,7 +35,8 @@ import { LocaleService } from './services/locale.service';
 	entryComponents: [DateRangePickerComponent]
 })
 export class NgxDateRangePickerMd {
-	constructor() {}
+	constructor() {
+	}
 	static forRoot(config: LocaleConfig = {}): ModuleWithProviders<NgxDateRangePickerMd> {
 		return {
 			ngModule: NgxDateRangePickerMd,
