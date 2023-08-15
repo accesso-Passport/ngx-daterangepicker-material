@@ -56,6 +56,14 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 	@Input()
 	autoApply: boolean;
 	@Input()
+	targetElementId: string;
+	@Input()
+	topAdjustment: number;
+	@Input()
+	leftAdjustment: number;
+	@Input()
+	isFullScreenPicker: boolean;
+	@Input()
 	alwaysShowCalendars: boolean;
 	@Input()
 	showCustomRangeLabel: boolean;
@@ -218,6 +226,7 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 		this.picker.opens = this.opens;
 		this.localeDiffer = this.differs.find(this.locale).create();
 		this.picker.closeOnAutoApply = this.closeOnAutoApply;
+		this.picker.isFullScreenPicker = this.isFullScreenPicker;
 	}
 
 	ngOnChanges(changes: SimpleChanges): void  {
@@ -303,49 +312,63 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 	setPosition() {
 		let style;
 		let containerTop;
-		const container = this.picker.pickerContainer.nativeElement;
-		const element = this._el.nativeElement;
-		if (this.drops && this.drops === 'up') {
-			containerTop = (element.offsetTop - container.clientHeight) + 'px';
+		this.topAdjustment = this.topAdjustment ? +this.topAdjustment : 0;
+		this.leftAdjustment = this.leftAdjustment ? +this.leftAdjustment : 0;
+
+		// todo: revisit the offsets where when both the shared components are done and the order search rework is finished
+		const container = this.picker.pickerContainer.nativeElement as HTMLElement;
+		let element = this._el.nativeElement as HTMLElement;
+
+		if (this.targetElementId) {
+			element = document.getElementById(this.targetElementId);
 		} else {
-			containerTop = 'auto';
+			element = element.parentElement;
+		}
+
+		const elementLocation = element.getBoundingClientRect();
+
+		if (this.drops && this.drops === 'up') {
+			containerTop = element.offsetTop - container.clientHeight + this.topAdjustment + 'px';
+		} else {
+			containerTop = elementLocation.top + this.topAdjustment + 'px';
 		}
 		if (this.opens === 'left') {
 			style = {
 				top: containerTop,
-				left: (element.offsetLeft - container.clientWidth + element.clientWidth) + 'px',
+				left: ((elementLocation.left - container.clientWidth + elementLocation.width - 100)  + this.leftAdjustment) + 'px',
 				right: 'auto'
 			};
 		} else if (this.opens === 'center') {
 			style = {
 				top: containerTop,
-				left: (element.offsetLeft  +  element.clientWidth / 2
-					- container.clientWidth / 2) + 'px',
+				left: ((elementLocation.left + elementLocation.width / 2 - container.clientWidth / 2)  + this.leftAdjustment) + 'px',
 				right: 'auto'
 			};
 		} else if (this.opens === 'right') {
 			style = {
 				top: containerTop,
-				left: element.offsetLeft  + 'px',
+				left: (elementLocation.left + this.leftAdjustment) + 'px',
 				right: 'auto'
 			};
 		} else {
-			const position = element.offsetLeft  +  element.clientWidth / 2 - container.clientWidth / 2;
+			const position = elementLocation.left + elementLocation.width / 2 - container.clientWidth / 2;
+
 			if (position < 0) {
 				style = {
 					top: containerTop,
-					left: element.offsetLeft + 'px',
+					left: (elementLocation.left + this.leftAdjustment) + 'px',
 					right: 'auto'
 				};
 			} else {
 				style = {
 					top: containerTop,
-					left: position + 'px',
+					left: (position + this.leftAdjustment) + 'px',
 					right: 'auto'
 				};
 			}
 		}
-		if (style) {
+
+		if (!this.isFullScreenPicker && style) {
 			this._renderer.setStyle(container, 'top', style.top);
 			this._renderer.setStyle(container, 'left', style.left);
 			this._renderer.setStyle(container, 'right', style.right);
@@ -388,6 +411,10 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 
 		if (event.target.classList.contains('ngx-daterangepicker-action')) {
 			return;
+		}
+
+		if (document.getElementById(this.targetElementId)?.contains(event.target)) {
+			this.open(event);
 		}
 
 		if (!this.elementRef.nativeElement.contains(event.target)) {
