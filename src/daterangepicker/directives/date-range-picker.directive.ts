@@ -20,7 +20,7 @@ import {
 } from '@angular/core';
 import { DateRangePickerComponent } from '../components/date-range-picker.component';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import * as _dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { LocaleConfig } from '../date-range-picker.config';
 import { LocaleService } from '../services/locale.service';
 
@@ -50,9 +50,9 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 	private _value: any;
 	private localeDiffer: KeyValueDiffer<string, any>;
 	@Input()
-	minDate: _dayjs.Dayjs;
+	minDate: dayjs.Dayjs;
 	@Input()
-	maxDate: _dayjs.Dayjs;
+	maxDate: dayjs.Dayjs;
 	@Input()
 	autoApply: boolean;
 	@Input()
@@ -384,11 +384,11 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 		const dateString = e.target.value.split(this.picker.locale.separator);
 		let start = null, end = null;
 		if (dateString.length === 2) {
-			start = _dayjs(dateString[0], this.picker.locale.format);
-			end = _dayjs(dateString[1], this.picker.locale.format);
+			start = dayjs(dateString[0], this.picker.locale.format);
+			end = dayjs(dateString[1], this.picker.locale.format);
 		}
 		if (this.singleDatePicker || start === null || end === null) {
-			start = _dayjs(e.target.value, this.picker.locale.format);
+			start = dayjs(e.target.value, this.picker.locale.format);
 			end = start;
 		}
 		if (!start.isValid() || !end.isValid()) {
