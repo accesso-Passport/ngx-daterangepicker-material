@@ -20,7 +20,7 @@ import {
 } from '@angular/core';
 import { DateRangePickerComponent } from '../components/date-range-picker.component';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import dayjs from 'dayjs';
+import * as dayjs from 'dayjs';
 import { LocaleConfig } from '../date-range-picker.config';
 import { LocaleService } from '../services/locale.service';
 
