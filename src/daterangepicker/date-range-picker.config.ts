@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
-import dayjs from 'dayjs';
-import localeData from 'dayjs/plugin/localeData';
+import * as dayjs from 'dayjs';
+import * as localeData from 'dayjs/plugin/localeData';
 
 dayjs.extend(localeData);
 
