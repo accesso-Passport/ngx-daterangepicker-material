@@ -16,7 +16,7 @@ import {
 	Output,
 	EventEmitter,
 	Renderer2,
-	HostBinding
+	HostBinding, ApplicationRef, Injector, EmbeddedViewRef
 } from '@angular/core';
 import { DateRangePickerComponent } from '../components/date-range-picker.component';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -174,22 +174,37 @@ export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 	$event: any;
 	@HostBinding('disabled') get disabled() { return this._disabled; }
 	constructor(
+		public applicationRef: ApplicationRef,
 		public viewContainerRef: ViewContainerRef,
+		public injector: Injector,
 		public _changeDetectorRef: ChangeDetectorRef,
 		private _componentFactoryResolver: ComponentFactoryResolver,
 		private _el: ElementRef,
 		private _renderer: Renderer2,
 		private differs: KeyValueDiffers,
 		private _localeService: LocaleService,
-		private elementRef: ElementRef
+		private elementRef: ElementRef,
 	) {
 		this.drops = 'down';
 		this.opens = 'auto';
+
+		const applicationRoot = document.body.querySelector('*[ng-version]') as HTMLElement;
+		const dateRangePickerElement = applicationRoot.querySelector('ngx-daterangepicker-material');
 		const componentFactory = this._componentFactoryResolver.resolveComponentFactory(DateRangePickerComponent);
-		viewContainerRef.clear();
-		const componentRef = viewContainerRef.createComponent(componentFactory);
-		this.picker = (<DateRangePickerComponent>componentRef.instance);
-		this.picker.inline = false; // set inline to false for all directive usage
+		const componentRef = componentFactory.create(injector);
+		this.applicationRef.attachView(componentRef.hostView);
+		const componentElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+		componentElem.classList.add('hidden');
+
+		if (dateRangePickerElement && applicationRoot.contains(dateRangePickerElement)) {
+			dateRangePickerElement.classList.add('hidden');
+			applicationRoot.removeChild(dateRangePickerElement);
+		}
+
+		applicationRoot.appendChild(componentElem);
+
+		this.picker = <DateRangePickerComponent>componentRef.instance;
+		this.picker.inline = false;
 	}
 	ngOnInit() {
 		this.picker.startDateChanged.asObservable().subscribe((itemChanged: any) => {
