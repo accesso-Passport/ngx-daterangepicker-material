@@ -1,35 +1,35 @@
 pipeline {
-  agent {
-    label 'ec2-fleet'
-  }
-  options {
-    timestamps()
-    ansiColor('xterm')
-    timeout(time: 30, unit: 'MINUTES')
-  }
-  stages {
-    stage('Build Library') {
-	  steps {
-		configFileProvider([configFile(fileId: 'te2-artifactory-npmrc', variable: 'NPMRC_PATH')]) {
-		  sh '''#!/bin/bash -xe
-			cp ${NPMRC_PATH} ${HOME}/.npmrc
-		  '''
+	agent {
+		dockerfile {
+			filename 'Dockerfile'
+			label 'ec2-fleet'
+			additionalBuildArgs '--progress=plain'
+			args '-u root --entrypoint='
 		}
-		nodejs(nodeJSInstallationName: 'v14.15.1') {
-		  sh '''#!/bin/bash -xe
-			node --version
-			npm --version
-
-			npm ci
-			npm run build
-		  '''
-		  dir('dist') {
-			sh '''#!/bin/bash -xe
-			  npm publish
-			'''
-		  }
-		}
-	  }
 	}
-  }
+	options {
+		timestamps()
+		ansiColor('xterm')
+		timeout(time: 30, unit: 'MINUTES')
+		buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '30', numToKeepStr: '10')
+	}
+	stages {
+		stage('Build Library') {
+			steps {
+				configFileProvider([configFile(fileId: 'te2-artifactory-npmrc', variable: 'NPMRC_PATH')]) {
+					sh '''
+						cp .npmrc /usr/src/app/dist/.npmrc
+
+						cd /usr/src/app/dist && npm publish
+					'''
+				}
+				
+			}
+		}
+	}
+	post {
+		always {
+			deleteDir()
+		}
+	}
 }
