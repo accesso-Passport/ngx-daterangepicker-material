@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as dayjs from 'dayjs';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 @Component({
 	selector: 'reactive-form',
@@ -8,8 +8,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 	styleUrls: ['./reactive-form.component.scss']
 })
 export class ReactiveFormComponent implements OnInit {
-	form: FormGroup;
-	constructor(private fb: FormBuilder) {
+	form: UntypedFormGroup;
+	constructor(private fb: UntypedFormBuilder) {
 		this.form = this.fb.group({
 			selected: [
 				{
