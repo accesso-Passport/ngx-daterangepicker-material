@@ -2,7 +2,7 @@
 #### Builds and publishes the library ####
 ##########################################
 
-FROM node:14.15.1 AS npm-base
+FROM node:18.20.3 AS npm-base
 
 WORKDIR /usr/src/app
 
@@ -11,7 +11,7 @@ COPY ./package*.json ./
 # Install application dependencies
 RUN npm ci
 
-FROM node:14.15.1 AS runtime
+FROM node:18.20.3 AS runtime
 
 # Need to switch to archive due to us using NodeJS 14.17
 RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list
