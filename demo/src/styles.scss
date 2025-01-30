@@ -1,5 +1,5 @@
 @import '../../node_modules/materialize-css/sass/materialize.scss';
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 *,
 *::before,
@@ -30,7 +30,7 @@ body {
     color: white !important;
 }
 
-mat-form-field .mat-form-field-flex input, mat-form-field .mat-form-field-flex input:focus {
+mat-form-field .mat-mdc-form-field-flex input, mat-form-field .mat-form-field-flex input:focus {
   border-bottom: none !important;
   box-shadow: none !important;
   margin: 0 !important;

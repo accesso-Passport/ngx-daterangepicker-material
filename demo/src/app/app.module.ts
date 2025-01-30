@@ -46,7 +46,7 @@ import { ReactiveFormComponent } from './reactive-form/reactive-form.component';
 		NgxDateRangePickerMd.forRoot({
 			applyLabel: 'Done'
 		}),
-		RouterModule.forRoot(AppRoutes)
+		RouterModule.forRoot(AppRoutes, {})
 	],
 	providers: [],
 	bootstrap: [AppComponent]

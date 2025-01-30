@@ -16,23 +16,22 @@ import { DateRangePickerDirective } from './directives/date-range-picker.directi
 import { LocaleService } from './services/locale.service';
 
 @NgModule({
-	declarations: [DateRangePickerComponent, DateRangePickerDirective],
-	imports: [
-		CommonModule,
-		FormsModule,
-		ReactiveFormsModule,
-		MatFormFieldModule,
-		MatInputModule,
-		MatDatepickerModule,
-		MatIconModule,
-		MatButtonModule,
-		MatCardModule,
-		MatDividerModule,
-		MatSelectModule
-	],
-	providers: [],
-	exports: [DateRangePickerComponent, DateRangePickerDirective],
-	entryComponents: [DateRangePickerComponent]
+    declarations: [DateRangePickerComponent, DateRangePickerDirective],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatIconModule,
+        MatButtonModule,
+        MatCardModule,
+        MatDividerModule,
+        MatSelectModule
+    ],
+    providers: [],
+    exports: [DateRangePickerComponent, DateRangePickerDirective]
 })
 export class NgxDateRangePickerMd {
 	constructor() {

@@ -9,14 +9,17 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "aot": true,
-            "outputPath": "demo/dist",
+            "outputPath": {
+              "base": "demo/dist"
+            },
             "index": "demo/src/index.html",
-            "main": "demo/src/main.ts",
             "tsConfig": "demo/src/tsconfig.app.json",
-            "polyfills": "demo/src/polyfills.ts",
+            "polyfills": [
+              "demo/src/polyfills.ts"
+            ],
             "assets": [
               "demo/src/assets",
               "demo/src/favicon.ico"
@@ -25,7 +28,8 @@
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "demo/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "browser": "demo/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -38,12 +42,9 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "demo/src/environments/environment.ts",
@@ -56,18 +57,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-daterangepicker-material:build"
+            "buildTarget": "ngx-daterangepicker-material:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ngx-daterangepicker-material:build:production"
+              "buildTarget": "ngx-daterangepicker-material:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-daterangepicker-material:build"
+            "buildTarget": "ngx-daterangepicker-material:build"
           }
         },
         "test": {
@@ -128,7 +129,6 @@
       }
     }
   },
-  "defaultProject": "ngx-daterangepicker-material",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "",

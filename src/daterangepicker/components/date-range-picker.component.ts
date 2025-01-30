@@ -10,12 +10,12 @@ import {
 	ViewChild,
 	ViewEncapsulation
 } from '@angular/core';
-import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import * as dayjs from 'dayjs';
-import * as localeData from 'dayjs/plugin/localeData';
-import * as arraySupport from 'dayjs/plugin/arraySupport';
-import * as isoWeek from 'dayjs/plugin/isoWeek';
-import * as LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import { UntypedFormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import dayjs from 'dayjs';
+import localeData from 'dayjs/plugin/localeData';
+import arraySupport from 'dayjs/plugin/arraySupport';
+import isoWeek from 'dayjs/plugin/isoWeek';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
 import { LocaleConfig } from '../date-range-picker.config';
 import { DateRangePreset } from '../date-range-picker.models';
@@ -80,7 +80,7 @@ export class DateRangePickerComponent implements OnInit {
 	chosenLabel: string;
 	calendarVariables: { left: any; right: any } = { left: {}, right: {} };
 	timepickerVariables: { left: any; right: any } = { left: {}, right: {} };
-	daterangepicker: { start: FormControl; end: FormControl } = { start: new FormControl(), end: new FormControl() };
+	daterangepicker: { start: UntypedFormControl; end: UntypedFormControl } = { start: new UntypedFormControl(), end: new UntypedFormControl() };
 	applyBtn: { disabled: boolean } = { disabled: false };
 	@Input()
 	startDate = dayjs().startOf('day');
