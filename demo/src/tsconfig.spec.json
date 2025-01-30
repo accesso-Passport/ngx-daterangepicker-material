@@ -6,7 +6,11 @@
     "types": [
       "jasmine",
       "node"
-    ]
+    ],
+	"resolveJsonModule": true,
+	"esModuleInterop": true,
+	"allowSyntheticDefaultImports": true,
+	"strictPropertyInitialization": false
   },
   "files": [
     "test.ts",

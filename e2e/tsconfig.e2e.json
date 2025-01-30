@@ -9,6 +9,10 @@
       "jasmine",
       "jasminewd2",
       "node"
-    ]
+    ],
+	"resolveJsonModule": true,
+	"esModuleInterop": true,
+	"allowSyntheticDefaultImports": true,
+	"strictPropertyInitialization": false
   }
 }

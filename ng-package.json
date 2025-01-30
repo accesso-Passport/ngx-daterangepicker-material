@@ -1,0 +1,8 @@
+{
+	"$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+	"allowedNonPeerDependencies": ["dayjs", "@angular/material"],
+	"lib": {
+		"entryFile": "src/daterangepicker/index.ts"
+	},
+	"dest": "dist"
+}

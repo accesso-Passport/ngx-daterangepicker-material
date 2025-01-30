@@ -11,20 +11,11 @@ import {
 	ViewEncapsulation
 } from '@angular/core';
 import { UntypedFormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import dayjs from 'dayjs';
-import localeData from 'dayjs/plugin/localeData';
-import arraySupport from 'dayjs/plugin/arraySupport';
-import isoWeek from 'dayjs/plugin/isoWeek';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import dayjs from '../dayjs.lib';
 
 import { LocaleConfig } from '../date-range-picker.config';
 import { DateRangePreset } from '../date-range-picker.models';
 import { LocaleService } from '../services/locale.service';
-
-dayjs.extend(localeData);
-dayjs.extend(LocalizedFormat);
-dayjs.extend(isoWeek);
-dayjs.extend(arraySupport);
 
 export enum SideEnum {
 	left = 'left',
@@ -80,7 +71,10 @@ export class DateRangePickerComponent implements OnInit {
 	chosenLabel: string;
 	calendarVariables: { left: any; right: any } = { left: {}, right: {} };
 	timepickerVariables: { left: any; right: any } = { left: {}, right: {} };
-	daterangepicker: { start: UntypedFormControl; end: UntypedFormControl } = { start: new UntypedFormControl(), end: new UntypedFormControl() };
+	daterangepicker: { start: UntypedFormControl; end: UntypedFormControl } = {
+		start: new UntypedFormControl(),
+		end: new UntypedFormControl()
+	};
 	applyBtn: { disabled: boolean } = { disabled: false };
 	@Input()
 	startDate = dayjs().startOf('day');
