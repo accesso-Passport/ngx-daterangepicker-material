@@ -30,5 +30,3 @@ RUN git config --global user.name "accesso-jenkins"
 
 # Run and build
 RUN npm run build
-
-RUN rm -rf dist
