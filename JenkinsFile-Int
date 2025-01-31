@@ -19,6 +19,8 @@ pipeline {
 				configFileProvider([configFile(fileId: 'te2-artifactory-npmrc', variable: 'NPMRC_PATH')]) {
 					sh '''
 						cp "$NPMRC_PATH" /usr/src/app/dist/.npmrc
+						echo "Updating .npmrc for correct auth format..."
+						sed -i 's|_auth =|//ci.te2.biz/artifactory/api/npm/te2-npm:_auth=|' /usr/src/app/dist/.npmrc
 
 						cd /usr/src/app/dist && npm publish
 					'''
