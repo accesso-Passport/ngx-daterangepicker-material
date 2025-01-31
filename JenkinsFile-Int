@@ -21,7 +21,7 @@ pipeline {
 						mkdir -p /usr/src/app/dist
 						cp "$NPMRC_PATH" /usr/src/app/dist/.npmrc
 
-						#cd /usr/src/app/dist && npm publish
+						cd /usr/src/app/dist && npm publish
 					'''
 				}
 				
