@@ -19,11 +19,14 @@ pipeline {
 				configFileProvider([configFile(fileId: 'te2-artifactory-npmrc', variable: 'NPMRC_PATH')]) {
 					sh '''
 						cp "$NPMRC_PATH" /usr/src/app/dist/.npmrc
-						echo "Updating .npmrc for correct auth format..."
-						sed -i 's|_auth =|//ci.te2.biz/artifactory/api/npm/te2-npm:_auth=|' /usr/src/app/dist/.npmrc
+						#echo "Updating .npmrc for correct auth format..."
+						#sed -i 's|_auth =|//ci.te2.biz/artifactory/api/npm/te2-npm:_auth=|' /usr/src/app/dist/.npmrc
+						echo "Fixing .npmrc formatting issues..."
+						sed -i 's|_auth= |_auth=|' /usr/src/app/dist/.npmrc
 						cat /usr/src/app/dist/.npmrc
-
-						cd /usr/src/app/dist && npm publish
+						echo "Testing authentication..."
+						npm whoami --registry=https://ci.te2.biz/artifactory/api/npm/te2-npm
+						#cd /usr/src/app/dist && npm publish
 					'''
 				}
 				
