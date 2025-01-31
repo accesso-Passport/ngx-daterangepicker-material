@@ -18,7 +18,8 @@ pipeline {
 			steps {
 				configFileProvider([configFile(fileId: 'te2-artifactory-npmrc', variable: 'NPMRC_PATH')]) {
 					sh '''
-						cp .npmrc /usr/src/app/dist/.npmrc
+						mkdir -p /usr/src/app/dist
+						cp "$NPMRC_PATH" /usr/src/app/dist/.npmrc
 
 						cd /usr/src/app/dist && npm publish
 					'''
