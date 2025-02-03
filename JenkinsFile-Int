@@ -25,8 +25,9 @@ pipeline {
 						sed -i 's|_auth= |_auth=|' /usr/src/app/dist/.npmrc
 						cat /usr/src/app/dist/.npmrc
 						echo "Testing authentication..."
+						npm config fix
 						npm whoami --registry=https://ci.te2.biz/artifactory/api/npm/te2-npm
-						#cd /usr/src/app/dist && npm publish
+						#cd /usr/src/app/dist && npm config fix && npm publish
 					'''
 				}
 				
