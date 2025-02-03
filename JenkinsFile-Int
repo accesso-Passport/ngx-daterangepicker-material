@@ -18,16 +18,20 @@ pipeline {
 			steps {
 				configFileProvider([configFile(fileId: 'te2-artifactory-npmrc', variable: 'NPMRC_PATH')]) {
 					sh '''
-						# Copy the managed .npmrc file to the working directory
+						# Copy the managed .npmrc file into the working directory
 						cp "$NPMRC_PATH" /usr/src/app/dist/.npmrc
 						
-						# Ensure the file ends with a newline to prevent subsequent output from appending to its last line.
+						# Ensure the file ends with a newline to avoid appending issues.
 						sed -i -e '$a\\' /usr/src/app/dist/.npmrc
+						
+						# Export environment variable so npm uses this file as its user config.
+						export NPM_CONFIG_USERCONFIG=/usr/src/app/dist/.npmrc
 						
 						echo "Updated .npmrc content:"
 						cat /usr/src/app/dist/.npmrc
 						
 						echo "Testing authentication..."
+						# The following commands will now use the specified npm config file.
 						npm config fix
 						npm whoami --registry=https://ci.te2.biz/artifactory/api/npm/te2-npm
 						
