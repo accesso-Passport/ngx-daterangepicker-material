@@ -18,11 +18,16 @@ pipeline {
 			steps {
 				configFileProvider([configFile(fileId: 'te2-artifactory-npmrc', variable: 'NPMRC_PATH')]) {
 					sh '''
+						# Copy the managed .npmrc file into the working directory
 						cp "$NPMRC_PATH" /usr/src/app/dist/.npmrc
-						echo "Updating .npmrc for correct auth format..."
-						sed -i 's|_auth =|//ci.te2.biz/artifactory/api/npm/te2-npm:_auth=|' /usr/src/app/dist/.npmrc
-
-						cd /usr/src/app/dist && npm publish
+						
+						# Ensure the file ends with a newline to avoid appending issues.
+						sed -i -e '$a\\' /usr/src/app/dist/.npmrc
+						
+						# Export environment variable so npm uses this file as its user config.
+						export NPM_CONFIG_USERCONFIG=/usr/src/app/dist/.npmrc
+				
+						cd /usr/src/app/dist && npm config fix && npm publish
 					'''
 				}
 				
