@@ -26,16 +26,8 @@ pipeline {
 						
 						# Export environment variable so npm uses this file as its user config.
 						export NPM_CONFIG_USERCONFIG=/usr/src/app/dist/.npmrc
-						
-						echo "Updated .npmrc content:"
-						cat /usr/src/app/dist/.npmrc
-						
-						echo "Testing authentication..."
-						# The following commands will now use the specified npm config file.
-						npm config fix
-						npm whoami --registry=https://ci.te2.biz/artifactory/api/npm/te2-npm
-						
-						#cd /usr/src/app/dist && npm config fix && npm publish
+				
+						cd /usr/src/app/dist && npm config fix && npm publish
 					'''
 				}
 				
