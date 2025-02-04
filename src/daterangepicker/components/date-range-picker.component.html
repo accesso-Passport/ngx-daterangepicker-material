@@ -27,7 +27,7 @@
 				<input
 					matInput
 					(focusout)="onStartDateFocusOut($event)"
-					[value]="startDate.toDate() | date: locale.displayFormat:undefined:locale.localeId"
+					[value]="startDate | date: locale.displayFormat:undefined:locale.localeId"
 					data-cy="date-range-picker-start-date__input"
 				/>
 			</mat-form-field>
@@ -38,7 +38,7 @@
 				<input
 					matInput
 					(focusout)="onEndDateFocusOut($event)"
-					[value]="endDate.toDate() | date: locale.displayFormat:undefined:locale.localeId"
+					[value]="endDate | date: locale.displayFormat:undefined:locale.localeId"
 					data-cy="date-range-picker-end-date__input"
 				/>
 			</mat-form-field>
@@ -399,7 +399,7 @@
 				<mat-icon>close</mat-icon>
 			</button>
 			<div class="selected-range">
-				{{startDate.toDate() | date: locale.displayFormat:undefined:locale.localeId}} - {{endDate.toDate() | date: locale.displayFormat:undefined:locale.localeId}}
+				{{startDate | date: locale.displayFormat:undefined:locale.localeId}} - {{endDate | date: locale.displayFormat:undefined:locale.localeId}}
 			</div>
 			<div class="header-icon">
 				<mat-icon>date_range</mat-icon>

@@ -515,7 +515,7 @@ export class DateRangePickerComponent implements OnInit {
 		const startDate: dayjs.Dayjs = this.getDateFromFocusEvent(event);
 
 		if (startDate.isValid()) {
-			this.setStartDate(startDate.toDate());
+			this.setStartDate(startDate);
 			this.updateView();
 		}
 	}
@@ -524,7 +524,7 @@ export class DateRangePickerComponent implements OnInit {
 		const endDate: dayjs.Dayjs = this.getDateFromFocusEvent(event);
 
 		if (endDate.isValid()) {
-			this.setEndDate(endDate.toDate());
+			this.setEndDate(endDate);
 			this.updateView();
 		}
 	}
