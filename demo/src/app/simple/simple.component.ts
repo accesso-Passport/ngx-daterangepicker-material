@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { DateRangePickerComponent, DateRangePickerDirective, LocaleConfig } from '../../../../src/daterangepicker';
 
 @Component({
