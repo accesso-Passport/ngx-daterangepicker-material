@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import * as dayjs from 'dayjs';
-import * as weekday from 'dayjs/plugin/weekday';
+import dayjs from 'dayjs';
+import weekday from 'dayjs/plugin/weekday';
 dayjs.extend(weekday);
 
 @Component({

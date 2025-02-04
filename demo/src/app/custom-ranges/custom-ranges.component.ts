@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { DateRangePreset } from '../../../../src/daterangepicker/date-range-picker.models';
 
 @Component({
