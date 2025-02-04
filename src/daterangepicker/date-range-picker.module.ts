@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,25 +13,26 @@ import { MatSelectModule } from '@angular/material/select';
 import { DateRangePickerComponent } from './components/date-range-picker.component';
 import { LOCALE_CONFIG, LocaleConfig } from './date-range-picker.config';
 import { DateRangePickerDirective } from './directives/date-range-picker.directive';
+import { DynamicDatePipe } from './dynamic-date.pipe';
 import { LocaleService } from './services/locale.service';
 
 @NgModule({
-    declarations: [DateRangePickerComponent, DateRangePickerDirective],
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDatepickerModule,
-        MatIconModule,
-        MatButtonModule,
-        MatCardModule,
-        MatDividerModule,
-        MatSelectModule
-    ],
-    providers: [],
-    exports: [DateRangePickerComponent, DateRangePickerDirective]
+	declarations: [DateRangePickerComponent, DateRangePickerDirective, DynamicDatePipe],
+	imports: [
+		CommonModule,
+		FormsModule,
+		ReactiveFormsModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatDatepickerModule,
+		MatIconModule,
+		MatButtonModule,
+		MatCardModule,
+		MatDividerModule,
+		MatSelectModule
+	],
+	providers: [DynamicDatePipe],
+	exports: [DateRangePickerComponent, DateRangePickerDirective, DatePipe]
 })
 export class NgxDateRangePickerMd {
 	constructor() {
