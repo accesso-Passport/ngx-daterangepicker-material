@@ -4,5 +4,8 @@
 	"lib": {
 		"entryFile": "src/daterangepicker/index.ts"
 	},
-	"dest": "dist"
+	"dest": "dist",
+	"assets": [
+		"./src/daterangepicker/dayjs.lib.ts"
+	]
 }
