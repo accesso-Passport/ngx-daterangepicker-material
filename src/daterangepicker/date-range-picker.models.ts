@@ -1,4 +1,4 @@
-import dayjs from './dayjs.lib';
+import { dayjs } from './dayjs.lib';
 
 export interface DateRangePreset {
 	key: string;

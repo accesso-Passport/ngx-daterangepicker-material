@@ -1,12 +1,12 @@
-import * as dayjs from 'dayjs';
-import * as arraySupport from 'dayjs/plugin/arraySupport';
-import * as isoWeek from 'dayjs/plugin/isoWeek';
-import * as localeData from 'dayjs/plugin/localeData';
-import * as LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import dayjs from 'dayjs';
+import localeData from 'dayjs/plugin/localeData';
+import arraySupport from 'dayjs/plugin/arraySupport';
+import isoWeek from 'dayjs/plugin/isoWeek';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
 dayjs.extend(localeData);
-dayjs.extend(arraySupport);
 dayjs.extend(LocalizedFormat);
 dayjs.extend(isoWeek);
+dayjs.extend(arraySupport);
 
-export default dayjs;
+export { dayjs, localeData, LocalizedFormat, isoWeek, arraySupport };

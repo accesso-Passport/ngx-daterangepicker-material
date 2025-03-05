@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "importHelpers": true,
-    "target": "ES2022",
-    "module": "es2016",
+    "target": "es2022",
+    "module": "es2022",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
