@@ -1,6 +1,6 @@
 {
   "name": "accesso-ngx-daterangepicker-material",
-  "version": "3.8.2",
+  "version": "3.8.3",
   "description": "Angular 2+ date range picker (with material design theme)",
   "keywords": [
     "angular2",
@@ -41,7 +41,7 @@
     "registry": "https://ci.te2.biz/artifactory/api/npm/te2-npm"
   },
   "peerDependencies": {
-    "dayjs": "1.11.9",
+    "dayjs": "1.11.13",
     "hammerjs": "2.0.8"
   },
   "devDependencies": {
@@ -63,7 +63,7 @@
     "angular-cli-ghpages": "^0.6.2",
     "codelyzer": "^6.0.0",
     "core-js": "^2.5.4",
-    "dayjs": "^1.11.13",
+    "dayjs": "1.11.13",
     "materialize-css": "^1.0.0",
     "ng-packagr": "18.2.1",
     "protractor": "~7.0.0",
