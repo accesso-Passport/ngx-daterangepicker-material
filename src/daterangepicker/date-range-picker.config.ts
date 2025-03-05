@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import dayjs from './dayjs.lib';
+import { dayjs } from './dayjs.lib';
 
 export const LOCALE_CONFIG = new InjectionToken<LocaleConfig>('daterangepicker.config');
 /**

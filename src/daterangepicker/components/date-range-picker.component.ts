@@ -11,7 +11,7 @@ import {
 	ViewEncapsulation
 } from '@angular/core';
 import { UntypedFormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import dayjs from '../dayjs.lib';
+import { dayjs } from '../dayjs.lib';
 
 import { LocaleConfig } from '../date-range-picker.config';
 import { DateRangePreset } from '../date-range-picker.models';
