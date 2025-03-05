@@ -3,3 +3,4 @@ export { DateRangePickerComponent } from './components/date-range-picker.compone
 export { DateRangePickerDirective } from './directives/date-range-picker.directive';
 export { LocaleConfig, LOCALE_CONFIG } from './date-range-picker.config';
 export { LocaleService } from './services/locale.service';
+export * from './dayjs.lib';

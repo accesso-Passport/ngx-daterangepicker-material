@@ -1,6 +1,6 @@
 {
   "name": "accesso-ngx-daterangepicker-material",
-  "version": "3.8.1",
+  "version": "3.8.2",
   "description": "Angular 2+ date range picker (with material design theme)",
   "keywords": [
     "angular2",
@@ -65,7 +65,7 @@
     "core-js": "^2.5.4",
     "dayjs": "^1.11.13",
     "materialize-css": "^1.0.0",
-    "ng-packagr": "^18.2.1",
+    "ng-packagr": "18.2.1",
     "protractor": "~7.0.0",
     "rimraf": "^2.6.1",
     "rxjs": "^6.5.5",
