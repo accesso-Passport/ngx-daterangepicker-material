@@ -1,4 +1,7 @@
 pipeline {
+	environment {
+		CODEARTIFACT_AUTH_TOKEN = sh(script: "aws codeartifact get-authorization-token --domain passport --domain-owner 407796645946 --query authorizationToken --output text" , returnStdout: true).trim()
+	}
 	agent {
 		dockerfile {
 			filename 'Dockerfile'
@@ -12,9 +15,6 @@ pipeline {
 		ansiColor('xterm')
 		timeout(time: 30, unit: 'MINUTES')
 		buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '30', numToKeepStr: '10')
-	}
-	environment {
-		CODEARTIFACT_AUTH_TOKEN = sh(script: "aws codeartifact get-authorization-token --domain passport --domain-owner 407796645946 --query authorizationToken --output text" , returnStdout: true).trim()
 	}
 	stages {
 		stage('Build Library') {
