@@ -1,14 +1,6 @@
 pipeline {
-	environment {
-		CODEARTIFACT_AUTH_TOKEN = sh(script: "aws codeartifact get-authorization-token --domain passport --domain-owner 407796645946 --query authorizationToken --output text" , returnStdout: true).trim()
-	}
 	agent {
-		dockerfile {
-			filename 'Dockerfile'
-			label 'ec2-fleet'
-			additionalBuildArgs '--progress=plain --build-arg CODEARTIFACT_AUTH_TOKEN=${CODEARTIFACT_AUTH_TOKEN}'
-			args '-u root --entrypoint='
-		}
+		label 'ec2-fleet'
 	}
 	options {
 		timestamps()
@@ -16,8 +8,19 @@ pipeline {
 		timeout(time: 30, unit: 'MINUTES')
 		buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '30', numToKeepStr: '10')
 	}
+	environment {
+		CODEARTIFACT_AUTH_TOKEN = sh(script: "aws codeartifact get-authorization-token --domain passport --domain-owner 407796645946 --query authorizationToken --output text" , returnStdout: true).trim()
+	}
 	stages {
 		stage('Build Library') {
+			agent {
+        		dockerfile {
+        			filename 'Dockerfile'
+        			label 'ec2-fleet'
+        			additionalBuildArgs '--progress=plain --build-arg CODEARTIFACT_AUTH_TOKEN=${CODEARTIFACT_AUTH_TOKEN}'
+        			args '-u root --entrypoint='
+        		}
+        	}
 			steps {
 				sh '''
 					cd /usr/src/app/dist && npm publish
