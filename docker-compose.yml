@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+    accesso-ngx-daterangepicker:
+        container_name: accesso-ngx-daterangepicker
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+            target: development
+            args:
+                CODEARTIFACT_AUTH_TOKEN: ${CODEARTIFACT_AUTH_TOKEN}
