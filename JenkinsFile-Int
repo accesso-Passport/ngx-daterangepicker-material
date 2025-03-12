@@ -3,7 +3,7 @@ pipeline {
 		dockerfile {
 			filename 'Dockerfile'
 			label 'ec2-fleet'
-			additionalBuildArgs '--progress=plain --build-arg CODEARTIFACT_AUTH_TOKEN=${codeArtifactToken}'
+			additionalBuildArgs '--progress=plain --build-arg CODEARTIFACT_AUTH_TOKEN=${CODEARTIFACT_AUTH_TOKEN}'
 			args '-u root --entrypoint='
 		}
 	}
