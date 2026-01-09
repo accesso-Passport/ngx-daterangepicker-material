@@ -5,7 +5,8 @@ import { DateRangePreset } from '../../../../src/daterangepicker/date-range-pick
 @Component({
 	selector: 'custom-ranges',
 	templateUrl: './custom-ranges.component.html',
-	styleUrls: ['./custom-ranges.component.scss']
+	styleUrls: ['./custom-ranges.component.scss'],
+	standalone: false
 })
 export class CustomRangesComponent implements OnInit {
 	selected: any;

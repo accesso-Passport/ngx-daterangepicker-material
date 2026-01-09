@@ -1,19 +1,17 @@
 {
-  "extends": "../../tsconfig.app.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../out-tsc/app",
-    "baseUrl": "./",
-    "types": [],
-	"resolveJsonModule": true,
-	"esModuleInterop": true,
-	"allowSyntheticDefaultImports": true,
-	"strictPropertyInitialization": false
+    "outDir": "../../dist/out-tsc",
+    "types": []
   },
   "files": [
     "main.ts",
     "polyfills.ts"
   ],
   "include": [
-    "demo/src/**/*.d.ts"
-  ]
+    "**/*.d.ts"
+  ],
+  "angularCompilerOptions": {
+    "compilationMode": "full"
+  }
 }

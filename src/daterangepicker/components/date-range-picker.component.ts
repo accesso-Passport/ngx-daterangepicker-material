@@ -38,7 +38,8 @@ export enum SideEnum {
 			useExisting: forwardRef(() => DateRangePickerComponent),
 			multi: true
 		}
-	]
+	],
+	standalone: false
 })
 export class DateRangePickerComponent implements OnInit {
 	@Input() set locale(value) {

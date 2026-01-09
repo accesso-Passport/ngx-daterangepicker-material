@@ -3,7 +3,8 @@ import dayjs from 'dayjs';
 
 @Component({
 	selector: 'app-timepicker',
-	templateUrl: './timepicker.component.html'
+	templateUrl: './timepicker.component.html',
+	standalone: false
 })
 export class TimepickerComponent implements OnInit {
 	selected: { startDate: dayjs.Dayjs; endDate: dayjs.Dayjs };

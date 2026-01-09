@@ -39,7 +39,8 @@ import { LocaleService } from '../services/locale.service';
 			provide: NG_VALUE_ACCESSOR,
 			useExisting: forwardRef(() => DateRangePickerDirective), multi: true
 		}
-	]
+	],
+	standalone: false
 })
 export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 	public picker: DateRangePickerComponent;

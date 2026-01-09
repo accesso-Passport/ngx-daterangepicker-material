@@ -2,7 +2,8 @@ import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-	name: 'date'
+	name: 'date',
+	standalone: false
 })
 export class DynamicDatePipe implements PipeTransform {
 	constructor(private datePipe: DatePipe) {}

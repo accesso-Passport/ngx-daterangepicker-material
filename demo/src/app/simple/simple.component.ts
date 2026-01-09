@@ -5,7 +5,8 @@ import { DateRangePickerComponent, DateRangePickerDirective, LocaleConfig } from
 @Component({
 	selector: 'app-simple',
 	templateUrl: './simple.component.html',
-	styleUrls: ['./simple.component.scss']
+	styleUrls: ['./simple.component.scss'],
+	standalone: false
 })
 export class SimpleComponent implements OnInit {
 	selected: { startDate: dayjs.Dayjs; endDate: dayjs.Dayjs };

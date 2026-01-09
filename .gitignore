@@ -47,6 +47,4 @@ Thumbs.db
 dist.tgz
 .history
 .npmrc
-/.angular/cache/18.2.14/ngx-daterangepicker-material/.tsbuildinfo
-/.angular/cache/18.2.14/ngx-daterangepicker-material/angular-compiler.db
-/.angular/cache/18.2.14/ngx-daterangepicker-material/angular-compiler.db-lock
+.angular/
