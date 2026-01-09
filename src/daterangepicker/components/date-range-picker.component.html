@@ -3,7 +3,7 @@
 	#pickerContainer
 	[ngClass]="{
 		ltr: locale.direction === 'ltr',
-		rtl: this.locale.direction === 'rtl',
+		rtl: locale.direction === 'rtl',
 		shown: isShown || inline,
 		single: singleDatePicker,
 		hidden: !isShown && !inline,
@@ -75,7 +75,7 @@
 										</mat-form-field>
 									</ng-container>
 									<ng-container *ngIf="!showDropdowns || !calendarVariables.left.dropdowns">
-										{{ this.locale.monthNames[calendarVariables?.left?.calendar[1][1].month()] }}
+										{{ locale.monthNames[calendarVariables?.left?.calendar[1][1].month()] }}
 										{{ calendarVariables?.left?.calendar[1][1].format(' YYYY') }}
 									</ng-container>
 								</th>
@@ -117,7 +117,7 @@
 							</tr>
 							<tr class="week-days">
 								<th *ngIf="showWeekNumbers || showISOWeekNumbers" class="week">
-									<span>{{ this.locale.weekLabel }}</span>
+									<span>{{ locale.weekLabel }}</span>
 								</th>
 								<th *ngFor="let dayofweek of locale.daysOfWeek">
 									<span>{{ dayofweek[0] }}</span>
@@ -246,7 +246,7 @@
 										</mat-form-field>
 									</ng-container>
 									<ng-container *ngIf="!showDropdowns || !calendarVariables.right.dropdowns">
-										{{ this.locale.monthNames[calendarVariables?.right?.calendar[1][1].month()] }}
+										{{ locale.monthNames[calendarVariables?.right?.calendar[1][1].month()] }}
 										{{ calendarVariables?.right?.calendar[1][1].format(' YYYY') }}
 									</ng-container>
 								</th>
@@ -269,7 +269,7 @@
 							</tr>
 							<tr class="week-days">
 								<th *ngIf="showWeekNumbers || showISOWeekNumbers" class="week">
-									<span>{{ this.locale.weekLabel }}</span>
+									<span>{{ locale.weekLabel }}</span>
 								</th>
 								<th *ngFor="let dayofweek of locale.daysOfWeek">
 									<span>{{ dayofweek[0] }}</span>
@@ -432,7 +432,7 @@
 									</mat-form-field>
 								</ng-container>
 								<ng-container *ngIf="!showDropdowns || !calendarVariables.left.dropdowns">
-									{{ this.locale.monthNames[calendarVariables?.left?.calendar[1][1].month()] }}
+									{{ locale.monthNames[calendarVariables?.left?.calendar[1][1].month()] }}
 									{{ calendarVariables?.left?.calendar[1][1].format(' YYYY') }}
 								</ng-container>
 							</th>
@@ -448,7 +448,7 @@
 						</tr>
 						<tr class="week-days">
 							<th *ngIf="showWeekNumbers || showISOWeekNumbers" class="week">
-								<span>{{ this.locale.weekLabel }}</span>
+								<span>{{ locale.weekLabel }}</span>
 							</th>
 							<th *ngFor="let dayofweek of locale.daysOfWeek">
 								<span>{{ dayofweek[0] }}</span>
@@ -499,7 +499,7 @@
 									</mat-form-field>
 								</ng-container>
 								<ng-container *ngIf="!showDropdowns || !calendarVariables.right.dropdowns">
-									{{ this.locale.monthNames[calendarVariables?.right?.calendar[1][1].month()] }}
+									{{ locale.monthNames[calendarVariables?.right?.calendar[1][1].month()] }}
 									{{ calendarVariables?.right?.calendar[1][1].format(' YYYY') }}
 								</ng-container>
 							</th>
@@ -515,7 +515,7 @@
 						</tr>
 						<tr class="week-days">
 							<th *ngIf="showWeekNumbers || showISOWeekNumbers" class="week">
-								<span>{{ this.locale.weekLabel }}</span>
+								<span>{{ locale.weekLabel }}</span>
 							</th>
 							<th *ngFor="let dayofweek of locale.daysOfWeek">
 								<span>{{ dayofweek[0] }}</span>
