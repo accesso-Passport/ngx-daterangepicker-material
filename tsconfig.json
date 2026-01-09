@@ -8,9 +8,9 @@
     "experimentalDecorators": true,
     "removeComments": true,
     "noImplicitAny": false,
-    "declaration": true,
+    "declaration": false,
+    "skipLibCheck": true,
     "sourceMap": false,
-    "outDir": "dist",
     "baseUrl": "./",
     "useDefineForClassFields": false,
     "resolveJsonModule": true,
@@ -18,17 +18,8 @@
     "strictPropertyInitialization": false
   },
   "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "skipMetadataEmit": false,
-    "strictMetadataEmit": true,
-    "annotationsAs": "decorators",
-	"esModuleInterop": true,
-	"allowSyntheticDefaultImports": true,
-	"compilationMode": "partial"
+    "compilationMode": "full"
   },
-  "include": [
-    "src/**/*"
-  ],
   "exclude": [
     "node_modules",
     "**/*.spec.ts"
