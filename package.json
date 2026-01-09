@@ -30,7 +30,7 @@
     "e2e": "ng e2e",
     "ngc": "./node_modules/.bin/ngc -p tsconfig.json",
     "gh-pages": "ng build --prod --base-href=\"/ngx-daterangepicker-material/\" && ngh --dir demo/dist",
-    "build": "ng-packagr -p ng-package.json --config tsconfig.json"
+    "build": "ng-packagr -p ng-package.json --config src/tsconfig.lib.json"
   },
   "author": "Fetrarijaona R.",
   "repository": {
