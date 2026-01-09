@@ -4,9 +4,10 @@ import weekday from 'dayjs/plugin/weekday';
 dayjs.extend(weekday);
 
 @Component({
-	selector: 'single-datepicker',
-	templateUrl: './single-datepicker.component.html',
-	styleUrls: ['./single-datepicker.component.scss']
+    selector: 'single-datepicker',
+    templateUrl: './single-datepicker.component.html',
+    styleUrls: ['./single-datepicker.component.scss'],
+    standalone: false
 })
 export class SingleDatepickerComponent implements OnInit {
 	selected = dayjs();

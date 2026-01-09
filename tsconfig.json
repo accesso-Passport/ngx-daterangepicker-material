@@ -18,8 +18,7 @@
     "baseUrl": "./",
     "useDefineForClassFields": false,
 	"resolveJsonModule": true,
-	"esModuleInterop": true,
-	"allowSyntheticDefaultImports": true,
+  "esModuleInterop": true,
 	"strictPropertyInitialization": false
   },
   "angularCompilerOptions": {

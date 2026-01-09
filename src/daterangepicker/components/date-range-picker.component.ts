@@ -23,22 +23,23 @@ export enum SideEnum {
 }
 
 @Component({
-	// tslint:disable-next-line:component-selector
-	selector: 'ngx-daterangepicker-material',
-	styleUrls: ['./date-range-picker.component.scss'],
-	templateUrl: './date-range-picker.component.html',
-	// tslint:disable-next-line:no-host-metadata-property
-	host: {
-		'(click)': 'handleInternalClick($event)'
-	},
-	encapsulation: ViewEncapsulation.None,
-	providers: [
-		{
-			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => DateRangePickerComponent),
-			multi: true
-		}
-	]
+    // tslint:disable-next-line:component-selector
+    selector: 'ngx-daterangepicker-material',
+    styleUrls: ['./date-range-picker.component.scss'],
+    templateUrl: './date-range-picker.component.html',
+    // tslint:disable-next-line:no-host-metadata-property
+    host: {
+        '(click)': 'handleInternalClick($event)'
+    },
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => DateRangePickerComponent),
+            multi: true
+        }
+    ],
+    standalone: false
 })
 export class DateRangePickerComponent implements OnInit {
 	@Input() set locale(value) {

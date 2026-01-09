@@ -3,10 +3,11 @@ import dayjs from 'dayjs';
 import { DateRangePickerDirective } from '../../../../src/daterangepicker/directives/date-range-picker.directive';
 
 @Component({
-	// tslint:disable-next-line:component-selector
-	selector: 'full',
-	templateUrl: './full.component.html',
-	styleUrls: ['./full.component.scss']
+    // tslint:disable-next-line:component-selector
+    selector: 'full',
+    templateUrl: './full.component.html',
+    styleUrls: ['./full.component.scss'],
+    standalone: false
 })
 export class FullComponent implements OnInit {
 	constructor() {
