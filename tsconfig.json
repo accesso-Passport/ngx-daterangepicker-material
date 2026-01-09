@@ -11,10 +11,6 @@
     "declaration": true,
     "sourceMap": false,
     "outDir": "dist",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
     "baseUrl": "./",
     "useDefineForClassFields": false,
     "resolveJsonModule": true,
