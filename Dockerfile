@@ -2,7 +2,7 @@
 #### Builds and publishes the library ####
 ##########################################
 
-FROM node:18.20.3 AS npm-base
+FROM node:24-alpine3.22 AS npm-base
 
 ARG CODEARTIFACT_AUTH_TOKEN
 
@@ -16,7 +16,7 @@ RUN npm config set '//passport-407796645946.d.codeartifact.us-east-1.amazonaws.c
 # Install application dependencies
 RUN npm ci --no-progress
 
-FROM node:18.20.3 AS runtime
+FROM node:24-alpine3.22 AS runtime
 
 ARG CODEARTIFACT_AUTH_TOKEN
 
