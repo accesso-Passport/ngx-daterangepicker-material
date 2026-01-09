@@ -25,22 +25,22 @@ import { LocaleConfig } from '../date-range-picker.config';
 import { LocaleService } from '../services/locale.service';
 
 @Directive({
-    // tslint:disable-next-line:directive-selector
-    selector: '*[ngxDateRangePickerMd]',
-    // tslint:disable-next-line:no-host-metadata-property
-    host: {
-        '(keyup.esc)': 'hide()',
-        '(blur)': 'onBlur()',
-        '(click)': 'open()',
-        '(keyup)': 'inputChanged($event)'
-    },
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => DateRangePickerDirective), multi: true
-        }
-    ],
-    standalone: false
+	// tslint:disable-next-line:directive-selector
+	selector: '*[ngxDateRangePickerMd]',
+	// tslint:disable-next-line:no-host-metadata-property
+	host: {
+		'(keyup.esc)': 'hide()',
+		'(blur)': 'onBlur()',
+		'(click)': 'open()',
+		'(keyup)': 'inputChanged($event)'
+	},
+	providers: [
+		{
+			provide: NG_VALUE_ACCESSOR,
+			useExisting: forwardRef(() => DateRangePickerDirective), multi: true
+		}
+	],
+	standalone: false
 })
 export class DateRangePickerDirective implements OnInit, OnChanges, DoCheck {
 	public picker: DateRangePickerComponent;

@@ -3,10 +3,10 @@ import dayjs from 'dayjs';
 import { DateRangePreset } from '../../../../src/daterangepicker/date-range-picker.models';
 
 @Component({
-    selector: 'custom-ranges',
-    templateUrl: './custom-ranges.component.html',
-    styleUrls: ['./custom-ranges.component.scss'],
-    standalone: false
+	selector: 'custom-ranges',
+	templateUrl: './custom-ranges.component.html',
+	styleUrls: ['./custom-ranges.component.scss'],
+	standalone: false
 })
 export class CustomRangesComponent implements OnInit {
 	selected: any;

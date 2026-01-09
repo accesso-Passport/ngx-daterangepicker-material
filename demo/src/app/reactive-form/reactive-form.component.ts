@@ -3,10 +3,10 @@ import dayjs from 'dayjs';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 @Component({
-    selector: 'reactive-form',
-    templateUrl: './reactive-form.component.html',
-    styleUrls: ['./reactive-form.component.scss'],
-    standalone: false
+	selector: 'reactive-form',
+	templateUrl: './reactive-form.component.html',
+	styleUrls: ['./reactive-form.component.scss'],
+	standalone: false
 })
 export class ReactiveFormComponent implements OnInit {
 	form: UntypedFormGroup;

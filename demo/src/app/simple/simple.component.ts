@@ -3,10 +3,10 @@ import dayjs from 'dayjs';
 import { DateRangePickerComponent, DateRangePickerDirective, LocaleConfig } from '../../../../src/daterangepicker';
 
 @Component({
-    selector: 'app-simple',
-    templateUrl: './simple.component.html',
-    styleUrls: ['./simple.component.scss'],
-    standalone: false
+	selector: 'app-simple',
+	templateUrl: './simple.component.html',
+	styleUrls: ['./simple.component.scss'],
+	standalone: false
 })
 export class SimpleComponent implements OnInit {
 	selected: { startDate: dayjs.Dayjs; endDate: dayjs.Dayjs };
