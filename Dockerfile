@@ -2,7 +2,7 @@
 #### Builds and publishes the library ####
 ##########################################
 
-FROM node:24-alpine3.22 AS npm-base
+FROM node:22 AS npm-base
 
 ARG CODEARTIFACT_AUTH_TOKEN
 
@@ -16,12 +16,10 @@ RUN npm config set '//passport-407796645946.d.codeartifact.us-east-1.amazonaws.c
 # Install application dependencies
 RUN npm ci --no-progress
 
-FROM node:24-alpine3.22 AS runtime
+FROM node:22 AS runtime
 
 ARG CODEARTIFACT_AUTH_TOKEN
 
-# Need to switch to archive due to us using NodeJS 14.17
-RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list
 RUN apt update && apt install -y git
 
 WORKDIR /usr/src/app
